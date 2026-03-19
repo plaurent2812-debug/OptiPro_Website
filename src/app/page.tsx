@@ -56,7 +56,7 @@ export default function Home() {
                     </h1>
                     
                     <p style={{ fontSize: '1.25rem', color: 'var(--secondary)', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto', lineHeight: 1.6 }}>
-                        La première secrétaire spécialisée bâtiment, 3x moins chère et disponible 7j/7. 
+                        Le premier service d'administration externalisée dédié au bâtiment, 3x moins cher et disponible 7j/7. 
                         <strong> Devis en 2 mins par vocal, facturation en 1 clic, relances impayés.</strong> On s'occupe de 100% de votre paperasse.
                     </p>
 
