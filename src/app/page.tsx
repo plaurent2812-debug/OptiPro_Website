@@ -40,7 +40,7 @@ export default function Home() {
             
             {/* Minimal Header */}
             <header style={{ padding: '1.5rem 5%', display: 'flex', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(10px)', zIndex: 10, borderBottom: '1px solid rgba(226, 232, 240, 0.5)', position: 'sticky', top: 0 }}>
-                <span style={{ fontSize: '1.75rem', fontWeight: '900', color: 'var(--primary)', letterSpacing: '-0.02em' }}>
+                <span style={{ fontSize: '2.25rem', fontWeight: '900', color: 'var(--primary)', letterSpacing: '-0.02em' }}>
                     Opti<span style={{ color: 'var(--accent)' }}>Pro</span>
                 </span>
             </header>
@@ -189,12 +189,12 @@ export default function Home() {
                     .pill-badge {
                         display: inline-flex;
                         align-items: center;
-                        padding: 0.35rem 1.25rem;
+                        padding: 0.5rem 1.5rem;
                         background: linear-gradient(90deg, #fff7ed, #ffedd5);
                         color: #ea580c;
                         border-radius: 2rem;
                         font-weight: 700;
-                        font-size: 0.875rem;
+                        font-size: 1.1rem;
                         margin-bottom: 2rem;
                         border: 1px solid #fed7aa;
                         box-shadow: 0 2px 10px rgba(234, 88, 12, 0.1);
