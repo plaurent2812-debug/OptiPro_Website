@@ -227,9 +227,9 @@ export default function Home() {
                         </div>
 
                         <h1 className="hero-title">
-                            Vous posez,<br />
+                            Votre travail,<br />
                             <span style={{ color: 'var(--accent)', position: 'relative' }}>
-                                on gère.
+                                notre gestion.
                                 <svg style={{ position: 'absolute', bottom: '-8px', left: 0, width: '100%', height: '12px' }} viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M2.00032 9.5C40.0003 -1.49999 154.5 -2.49999 198 9.5" stroke="var(--accent)" strokeWidth="4" strokeLinecap="round"/>
                                 </svg>
