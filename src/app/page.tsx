@@ -155,7 +155,7 @@ export default function Home() {
                         <div style={{ padding: '2.5rem 2rem', backgroundColor: 'white', borderRadius: '1.5rem', border: '1px solid var(--border)', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)' }}>
                             <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem', backgroundColor: '#dcfce7', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '1rem' }}>💻</div>
                             <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.75rem', color: 'var(--primary)' }}>3. La plateforme gère</h3>
-                            <p style={{ color: 'var(--secondary)', lineHeight: 1.6 }}>Retrouvez vos clients, factures et suivi de chantiers. Profitez d'un planning intelligent avec notifications intégrées pour vos rappels et alertes d'impayés.</p>
+                            <p style={{ color: 'var(--secondary)', lineHeight: 1.6 }}>Retrouvez vos clients, factures et suivi de chantiers. Profitez d'un planning intelligent avec notifications intégrées pour vos rendez-vous, rappels et autres alertes.</p>
                         </div>
                     </div>
                 </section>
