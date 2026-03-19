@@ -137,7 +137,7 @@ export default function Home() {
                         Concrètement, qu'est-ce qu'OptiBoard ?
                     </h2>
                     <p style={{ fontSize: '1.125rem', color: 'var(--secondary)', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 4rem auto' }}>
-                        C'est votre plateforme d'administration invisible. Vous n'avez même pas besoin de vous y connecter pour l'utiliser.
+                        C'est votre plateforme d'administration pensée pour le terrain. Prenez vos frais en photo, consultez votre planning et vos clients sur l'application, et laissez OptiBoard gérer la paperasse en arrière-plan.
                     </p>
                     
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', textAlign: 'left' }}>
