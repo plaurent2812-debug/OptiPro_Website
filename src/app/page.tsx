@@ -45,8 +45,31 @@ export default function Home() {
             </header>
 
             <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem 5%' }}>
+                <style>{`
+                    @keyframes pulse-ring {
+                        0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+                        70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+                        100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+                    }
+                    @keyframes typing-status {
+                        0% { content: 'Installation des serveurs...'; }
+                        25% { content: 'Synchronisation Telegram...'; }
+                        50% { content: 'Configuration de l\\'IA OptiBoard...'; }
+                        75% { content: 'Déploiement de la plateforme...'; }
+                        100% { content: 'Installation des serveurs...'; }
+                    }
+                    .animated-status-text::after {
+                        content: '';
+                        animation: typing-status 8s infinite;
+                    }
+                `}</style>
                 <div style={{ maxWidth: '800px', width: '100%', textAlign: 'center' }}>
                     
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', padding: '0.5rem 1rem', backgroundColor: '#f8fafc', borderRadius: '2rem', border: '1px solid #e2e8f0', width: 'fit-content', margin: '0 auto 2rem auto' }}>
+                        <div style={{ width: '8px', height: '8px', backgroundColor: '#10b981', borderRadius: '50%', animation: 'pulse-ring 2s infinite' }}></div>
+                        <span style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: '500', letterSpacing: '0.05em', textTransform: 'uppercase' }} className="animated-status-text"></span>
+                    </div>
+
                     <div style={{ display: 'inline-block', padding: '0.25rem 1rem', background: '#e0f2fe', color: '#0369a1', borderRadius: '2rem', fontWeight: '600', fontSize: '0.875rem', marginBottom: '1.5rem', border: '1px solid #bae6fd' }}>
                         🚀 Lancement très prochainement
                     </div>
