@@ -1,259 +1,119 @@
-import type { Metadata } from "next";
-import Button from "@/components/ui/Button";
-import PackCard from "@/components/ui/PackCard";
-import PricingCard from "@/components/ui/PricingCard";
-import { optiboardPacks } from "@/data/packs";
-import styles from "./HomePage.module.css";
+'use client';
 
-export const metadata: Metadata = {
-  title: "OptiBoard — Administration externalisée pour artisans du bâtiment",
-  description:
-    "Vous posez, on gère. Devis, factures, relances, trésorerie : OptiBoard prend en charge 100% de votre paperasse. Essai gratuit 14 jours.",
-};
-
-const roiRows = [
-  { before: "10h/mois de paperasse", after: "0h — on gère tout" },
-  { before: "Devis envoyés en retard (2-3 jours)", after: "Devis envoyé dans l'heure" },
-  { before: "Factures oubliées, impayés qui traînent", after: "Relances auto, rien ne passe entre les mailles" },
-  { before: "Pas de visibilité sur la tréso", after: "Dashboard temps réel" },
-  { before: "Comptable qui râle en fin d'année", after: "Export FEC chaque mois, tout carré" },
-  { before: "Clients qui attendent pour payer", after: "Paiement en ligne par carte" },
-];
-
-const features = [
-  {
-    icon: "🎙️",
-    title: "Devis en 2 minutes chrono",
-    desc: "Vous envoyez un vocal depuis le chantier. On génère le devis complet, structuré, chiffré, conforme. Le client reçoit un lien pour accepter et signer en ligne.",
-  },
-  {
-    icon: "🧾",
-    title: "Facturation automatique",
-    desc: "Devis accepté → facture en 1 clic. Situations 30%-60%-solde, paiement par carte (Stripe), numérotation conforme, mentions légales, TVA.",
-  },
-  {
-    icon: "🔔",
-    title: "Relances sans effort",
-    desc: "Surveillance quotidienne des impayés. Relance automatique J+15, J+30, J+45. Nos artisans récupèrent en moyenne 2 000 à 5 000€/mois.",
-  },
-  {
-    icon: "📊",
-    title: "Trésorerie en temps réel",
-    desc: "Vue instantanée : facturé, encaissé, en attente. Alertes dépassement délais. Historique mois / trimestre / année. Rapport mensuel automatique le 1er.",
-  },
-  {
-    icon: "📁",
-    title: "Export comptable clé en main",
-    desc: "FEC (Pennylane, Indy…) ou CSV. Compatible tous logiciels comptables. Dates en heure française. Votre comptable reçoit tout, propre, chaque mois.",
-  },
-  {
-    icon: "🔗",
-    title: "Portail client & signature en ligne",
-    desc: "Lien unique par projet. Le client voit le devis, l'accepte, signe électroniquement et paie en ligne. Zéro papier, zéro déplacement pour une signature.",
-  },
-];
+import { FormEvent, useState } from 'react';
+import Button from '@/components/ui/Button';
 
 export default function Home() {
-  return (
-    <>
-      {/* Hero Section */}
-      <section className={styles.hero}>
-        <div className={styles.heroPattern} />
-        <div className={`container ${styles.heroContent}`}>
-          <div className={styles.heroBadge}>
-            Service humain · Pas un logiciel
-          </div>
-          <h1 className={styles.heroTitle}>
-            Vous posez,{" "}
-            <span className={styles.heroAccent}>on gère.</span>
-          </h1>
-          <p className={styles.heroSubtitle}>
-            OptiBoard prend en charge <strong>100% de votre paperasse</strong> — devis,
-            factures, relances, trésorerie. Comme avoir une secrétaire spécialisée
-            bâtiment, 3x moins cher.
-          </p>
-          <div className={styles.heroCta}>
-            <Button
-              href="/contact"
-              style={{
-                fontSize: "1.125rem",
-                padding: "1rem 2rem",
-                backgroundColor: "var(--accent)",
-                color: "white",
-                border: "none",
-                borderRadius: "0.5rem",
-                fontWeight: "600",
-              }}
-            >
-              Essai gratuit 14 jours
-            </Button>
-            <Button
-              href="/services"
-              variant="outline"
-              style={{
-                fontSize: "1.125rem",
-                padding: "1rem 2rem",
-                borderColor: "rgba(255,255,255,0.3)",
-                color: "white",
-                borderRadius: "0.5rem",
-                fontWeight: "600",
-              }}
-            >
-              Voir les tarifs
-            </Button>
-          </div>
+    const [isLoading, setIsLoading] = useState(false);
+    const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-          {/* ROI Snapshot */}
-          <div className={styles.mockupFrame}>
-            <div className={styles.mockupWindow}>
-              <div className={styles.mockupBar}>
-                <div className={`${styles.mockupDot} ${styles.dotRed}`} />
-                <div className={`${styles.mockupDot} ${styles.dotYellow}`} />
-                <div className={`${styles.mockupDot} ${styles.dotGreen}`} />
-              </div>
-              <div style={{ overflowX: "auto", marginTop: "1rem" }}>
-                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.9rem" }}>
-                  <thead>
-                    <tr>
-                      <th style={{ textAlign: "left", padding: "0.5rem 1rem", color: "#ef4444", borderBottom: "2px solid #fecaca" }}>
-                        ❌ Avant OptiBoard
-                      </th>
-                      <th style={{ textAlign: "left", padding: "0.5rem 1rem", color: "#16a34a", borderBottom: "2px solid #bbf7d0" }}>
-                        ✅ Avec OptiBoard
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {roiRows.map((row, i) => (
-                      <tr key={i} style={{ borderBottom: "1px solid #e2e8f0" }}>
-                        <td style={{ padding: "0.6rem 1rem", color: "#64748b" }}>{row.before}</td>
-                        <td style={{ padding: "0.6rem 1rem", color: "#1e293b", fontWeight: 500 }}>{row.after}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setStatus('idle');
 
-      {/* Social Proof / ROI Calcul */}
-      <section className={`${styles.section} ${styles.sectionAlt}`}>
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Le calcul est simple</h2>
-            <p className={styles.sectionSubtitle}>
-              Votre main d&apos;œuvre vaut <strong>50€/h</strong>. Vous passez <strong>10h/mois</strong> sur l&apos;admin
-              = <strong>500€/mois perdus</strong>. OptiBoard coûte <strong>299€/mois</strong>.
-              Vous gagnez 200€ + la tranquillité + les impayés récupérés.
-            </p>
-          </div>
-          <div style={{ display: "flex", justifyContent: "center", gap: "2rem", flexWrap: "wrap" }}>
-            {[
-              { value: "10h", label: "récupérées chaque mois" },
-              { value: "2 000€", label: "à 5 000€ d'impayés récupérés/mois" },
-              { value: "30s", label: "pour générer un devis par vocal (Premium)" },
-            ].map((stat) => (
-              <div key={stat.label} style={{ textAlign: "center", minWidth: "180px" }}>
-                <div style={{ fontSize: "2.5rem", fontWeight: "800", color: "var(--accent)" }}>{stat.value}</div>
-                <div style={{ color: "var(--muted)", marginTop: "0.25rem" }}>{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        const formData = new FormData(e.currentTarget);
+        const data = Object.fromEntries(formData.entries());
+        // Add a default message indicating this is from the waitlist
+        data.message = "[INSCRIPTION LISTE D'ATTENTE] - Accès en avant-première demandé via la page teaser.";
 
-      {/* Features Grid */}
-      <section className={styles.section}>
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Ce qu&apos;on fait à votre place</h2>
-            <p className={styles.sectionSubtitle}>
-              Zéro logiciel à apprendre. Vous envoyez un vocal ou un SMS — on fait le reste.
-            </p>
-          </div>
-          <div className={styles.grid}>
-            {features.map((feat) => (
-              <div
-                key={feat.title}
-                style={{
-                  background: "white",
-                  border: "1px solid var(--border)",
-                  borderRadius: "1rem",
-                  padding: "1.75rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.75rem",
-                }}
-              >
-                <div style={{ fontSize: "2rem" }}>{feat.icon}</div>
-                <h3 style={{ fontSize: "1.1rem", fontWeight: 700, margin: 0 }}>{feat.title}</h3>
-                <p style={{ color: "var(--muted)", margin: 0, lineHeight: 1.6 }}>{feat.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
 
-      {/* Pricing Section */}
-      <section className={`${styles.section} ${styles.sectionAlt}`}>
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Tarifs clairs, sans engagement</h2>
-            <p className={styles.sectionSubtitle}>
-              Essai gratuit 14 jours. Préavis d&apos;un mois. Onboarding en 1 appel de 30 minutes.
-            </p>
-          </div>
-          <div className={styles.grid}>
-            {optiboardPacks.map((pack) => (
-              <PricingCard key={pack.id} pack={pack} />
-            ))}
-          </div>
-        </div>
-      </section>
+            if (!res.ok) throw new Error('Erreur lors de l\'envoi');
+            setStatus('success');
+            (e.target as HTMLFormElement).reset();
+        } catch (error) {
+            console.error(error);
+            setStatus('error');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
-      {/* OptiBoard Packs Feature Cards */}
-      <section className={styles.section}>
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Ce qui est inclus dans chaque plan</h2>
-            <p className={styles.sectionSubtitle}>
-              Trois niveaux de service pour s&apos;adapter à la taille de votre activité.
-            </p>
-          </div>
-          <div className={styles.grid}>
-            {optiboardPacks.map((pack) => (
-              <PackCard key={pack.id} pack={pack} />
-            ))}
-          </div>
-        </div>
-      </section>
+    return (
+        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--background)' }}>
+            {/* Minimal Header */}
+            <header style={{ padding: '1.5rem 5%', display: 'flex', justifyContent: 'center', borderBottom: '1px solid var(--border)', backgroundColor: 'white' }}>
+                <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--primary)' }}>
+                    Opti<span style={{ color: 'var(--accent)' }}>Board</span>
+                </span>
+            </header>
 
-      {/* CTA Bottom */}
-      <section className={styles.cta}>
-        <div className="container">
-          <h2 className={styles.ctaTitle}>
-            Prêt à récupérer vos soirées ?
-          </h2>
-          <p className={styles.ctaSubtitle}>
-            Onboarding en 1 appel de 30 minutes. Pierre vous configure tout.
-            Essai gratuit 14 jours, sans engagement.
-          </p>
-          <Button
-            href="/contact"
-            style={{
-              backgroundColor: "var(--accent)",
-              color: "white",
-              border: "none",
-              fontSize: "1.125rem",
-              padding: "1rem 2rem",
-            }}
-          >
-            Démarrer l&apos;essai gratuit
-          </Button>
+            <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem 5%' }}>
+                <div style={{ maxWidth: '800px', width: '100%', textAlign: 'center' }}>
+                    
+                    <div style={{ display: 'inline-block', padding: '0.25rem 1rem', background: '#e0f2fe', color: '#0369a1', borderRadius: '2rem', fontWeight: '600', fontSize: '0.875rem', marginBottom: '1.5rem', border: '1px solid #bae6fd' }}>
+                        🚀 Lancement très prochainement
+                    </div>
+
+                    <h1 style={{ fontSize: '3.5rem', fontWeight: '800', lineHeight: 1.1, color: 'var(--primary)', marginBottom: '1.5rem', letterSpacing: '-0.02em' }}>
+                        Vous posez, <span style={{ color: 'var(--accent)' }}>on gère.</span>
+                    </h1>
+                    
+                    <p style={{ fontSize: '1.25rem', color: 'var(--secondary)', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto', lineHeight: 1.6 }}>
+                        La première secrétaire spécialisée bâtiment, 3x moins chère et disponible 7j/7. 
+                        <strong> Devis en 2 mins par vocal, facturation en 1 clic, relances impayés.</strong> On s'occupe de 100% de votre paperasse.
+                    </p>
+
+                    <div style={{ backgroundColor: 'white', padding: '2.5rem', borderRadius: '1.5rem', border: '1px solid var(--border)', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.05)', maxWidth: '500px', margin: '0 auto', textAlign: 'left' }}>
+                        <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', textAlign: 'center' }}>Accès en Avant-Première</h2>
+                        <p style={{ color: 'var(--muted)', textAlign: 'center', marginBottom: '2rem', fontSize: '0.95rem' }}>
+                            Inscrivez-vous sur liste d'attente pour être averti du lancement et bénéficier du premier mois offert.
+                        </p>
+
+                        {status === 'success' ? (
+                            <div style={{ textAlign: 'center', padding: '2rem 1rem' }}>
+                                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✅</div>
+                                <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#166534' }}>Inscription confirmée !</h3>
+                                <p style={{ color: 'var(--muted)' }}>Vous êtes sur la liste. Pierre vous contactera très vite avec vos accès.</p>
+                            </div>
+                        ) : (
+                            <form onSubmit={handleSubmit}>
+                                {status === 'error' && (
+                                    <div style={{ padding: '0.75rem', background: '#fee2e2', color: '#991b1b', borderRadius: '0.5rem', marginBottom: '1.5rem', fontSize: '0.875rem', textAlign: 'center' }}>
+                                        Une erreur est survenue. Veuillez réessayer.
+                                    </div>
+                                )}
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label htmlFor="name" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: '500' }}>Prénom & Nom</label>
+                                    <input type="text" id="name" name="name" required placeholder="Jean Dupont" style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--border)', fontSize: '1rem', outline: 'none' }} />
+                                </div>
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label htmlFor="email" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: '500' }}>Email</label>
+                                    <input type="email" id="email" name="email" required placeholder="jean@entreprise.fr" style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--border)', fontSize: '1rem', outline: 'none' }} />
+                                </div>
+                                <div style={{ marginBottom: '1.5rem' }}>
+                                    <label htmlFor="activity" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: '500' }}>Corps de métier</label>
+                                    <select id="activity" name="activity" required style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--border)', fontSize: '1rem', outline: 'none', backgroundColor: 'white' }}>
+                                        <option value="">Sélectionnez votre métier</option>
+                                        <option value="Plomberie / Chauffage">Plomberie / Chauffage</option>
+                                        <option value="Électricité">Électricité</option>
+                                        <option value="Maçonnerie / Gros oeuvre">Maçonnerie / Gros oeuvre</option>
+                                        <option value="Menuiserie">Menuiserie</option>
+                                        <option value="Peinture / Finitions">Peinture / Finitions</option>
+                                        <option value="Multi-services / Rénovation globale">Multi-services / Rénovation globale</option>
+                                        <option value="Autre BTP">Autre pro du bâtiment</option>
+                                    </select>
+                                </div>
+                                <Button type="submit" variant="primary" style={{ width: '100%', padding: '0.875rem', fontSize: '1rem', opacity: isLoading ? 0.7 : 1 }} disabled={isLoading}>
+                                    {isLoading ? 'Inscription...' : 'Rejoindre la liste d\'attente'}
+                                </Button>
+                            </form>
+                        )}
+                    </div>
+
+                </div>
+            </main>
+
+            {/* Minimal Footer */}
+            <footer style={{ padding: '2rem 5%', textAlign: 'center', borderTop: '1px solid var(--border)', color: 'var(--muted)', fontSize: '0.875rem', backgroundColor: 'white' }}>
+                &copy; {new Date().getFullYear()} OptiBoard. Service exclusif pour les artisans du bâtiment.
+            </footer>
         </div>
-      </section>
-    </>
-  );
+    );
 }

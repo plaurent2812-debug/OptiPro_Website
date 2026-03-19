@@ -3,19 +3,60 @@
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Button from '@/components/ui/Button';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 
 function ContactForm() {
     const searchParams = useSearchParams();
     const initialPlan = searchParams.get('plan') || '';
+    const [isLoading, setIsLoading] = useState(false);
+    const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        alert("Merci ! Pierre vous contactera dans les 24h pour organiser votre onboarding de 30 minutes.");
+        setIsLoading(true);
+        setStatus('idle');
+
+        const formData = new FormData(e.currentTarget);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+
+            if (!res.ok) throw new Error('Erreur lors de l\'envoi');
+            setStatus('success');
+            (e.target as HTMLFormElement).reset();
+        } catch (error) {
+            console.error(error);
+            setStatus('error');
+        } finally {
+            setIsLoading(false);
+        }
     };
+
+    if (status === 'success') {
+        return (
+            <div style={{ maxWidth: '600px', margin: '0 auto', background: 'white', padding: '3rem 2rem', borderRadius: '1rem', border: '1px solid var(--border)', textAlign: 'center' }}>
+                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✅</div>
+                <h2 style={{ marginBottom: '1rem' }}>Demande envoyée !</h2>
+                <p style={{ color: 'var(--muted)', fontSize: '1.1rem', marginBottom: '2rem' }}>
+                    Merci. Pierre vous contactera dans les 24h pour organiser votre onboarding de 30 minutes.
+                </p>
+                <Button onClick={() => setStatus('idle')} variant="outline">Envoyer une autre demande</Button>
+            </div>
+        );
+    }
 
     return (
         <form onSubmit={handleSubmit} style={{ maxWidth: '600px', margin: '0 auto', background: 'white', padding: '2rem', borderRadius: '1rem', border: '1px solid var(--border)' }}>
+            {status === 'error' && (
+                <div style={{ padding: '1rem', background: '#fee2e2', color: '#991b1b', borderRadius: '0.5rem', marginBottom: '1.5rem', textAlign: 'center' }}>
+                    Une erreur est survenue. Veuillez réessayer ou nous contacter par email.
+                </div>
+            )}
             <div className="form-group">
                 <label htmlFor="name" className="form-label">Nom complet</label>
                 <input type="text" id="name" name="name" className="form-input" required placeholder="Jean Dupont" />
@@ -76,8 +117,8 @@ function ContactForm() {
                 <textarea id="message" name="message" className="form-textarea" placeholder="Ex : je passe mes soirées à faire des devis, j'ai des impayés depuis 3 mois..."></textarea>
             </div>
 
-            <Button type="submit" variant="primary" style={{ width: '100%' }}>
-                Démarrer l&apos;essai gratuit — Pierre me contacte sous 24h
+            <Button type="submit" variant="primary" style={{ width: '100%', opacity: isLoading ? 0.7 : 1 }} disabled={isLoading}>
+                {isLoading ? 'Envoi en cours...' : 'Démarrer l\'essai gratuit — Pierre me contacte sous 24h'}
             </Button>
         </form>
     );

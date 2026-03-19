@@ -33,14 +33,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isTeaserMode = true; // Activer le mode Teaser pour masquer la navigation complète
+
   return (
     <html lang="fr">
       <body className={outfit.className}>
-        <Header />
-        <main style={{ paddingTop: 'var(--header-height)', minHeight: 'calc(100vh - 300px)' }}>
-          {children}
-        </main>
-        <Footer />
+        {!isTeaserMode && <Header />}
+        <main>{children}</main>
+        {!isTeaserMode && <Footer />}
       </body>
     </html>
   );
