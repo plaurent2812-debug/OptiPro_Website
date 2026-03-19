@@ -63,7 +63,7 @@ export default function Home() {
                     <div style={{ backgroundColor: 'white', padding: '2.5rem', borderRadius: '1.5rem', border: '1px solid var(--border)', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.05)', maxWidth: '500px', margin: '0 auto', textAlign: 'left' }}>
                         <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', textAlign: 'center' }}>Accès en Avant-Première</h2>
                         <p style={{ color: 'var(--muted)', textAlign: 'center', marginBottom: '2rem', fontSize: '0.95rem' }}>
-                            Inscrivez-vous sur liste d'attente pour être averti du lancement de l'application <strong>OptiBoard</strong> et bénéficier d'un mois à -50%.
+                            Inscrivez-vous sur liste d'attente pour être averti du lancement de la plateforme <strong>OptiBoard</strong> et bénéficier d'un mois à -50%.
                         </p>
 
                         {status === 'success' ? (
