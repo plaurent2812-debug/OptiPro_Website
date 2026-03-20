@@ -57,6 +57,19 @@ const formules = [
             'Support prioritaire',
         ],
     },
+    {
+        id: 'premium',
+        name: 'Premium',
+        price: '499',
+        tagline: 'Accompagnement complet avec reporting et suivi stratégique',
+        features: [
+            'Tout le plan Accompagné',
+            'Appel hebdomadaire avec Pierre',
+            'Reporting mensuel détaillé',
+            'Multi-utilisateurs avec rôles',
+            'Traitement prioritaire',
+        ],
+    },
 ];
 
 const metiers = [
@@ -90,9 +103,9 @@ export default function Home() {
                             </div>
 
                             <h1 className="hero-title">
-                                Votre admin chantier,{' '}
+                                Votre travail,<br />
                                 <span style={{ color: 'var(--accent)', position: 'relative' }}>
-                                    automatisée.
+                                    notre gestion.
                                     <svg style={{ position: 'absolute', bottom: '-8px', left: 0, width: '100%', height: '12px' }} viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M2.00032 9.5C40.0003 -1.49999 154.5 -2.49999 198 9.5" stroke="var(--accent)" strokeWidth="4" strokeLinecap="round" />
                                     </svg>
@@ -165,10 +178,10 @@ export default function Home() {
                 </section>
 
                 {/* Deux formules */}
-                <section style={{ padding: '4rem 5%', maxWidth: '1000px', margin: '0 auto' }}>
+                <section style={{ padding: '4rem 5%', maxWidth: '1200px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
                         <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--primary)', marginBottom: '1rem', letterSpacing: '-0.02em' }}>
-                            Deux formules, un seul objectif
+                            Nos formules
                         </h2>
                         <p style={{ fontSize: '1.125rem', color: 'var(--secondary)', maxWidth: '600px', margin: '0 auto', lineHeight: 1.6 }}>
                             Zéro paperasse, que vous soyez autonome ou que vous préfériez tout déléguer.
@@ -219,7 +232,7 @@ export default function Home() {
 
                     <p style={{ textAlign: 'center', marginTop: '2rem' }}>
                         <Link href="/services" style={{ color: 'var(--accent)', fontWeight: 600, fontSize: '1.05rem' }}>
-                            Voir tous les détails et la formule Premium →
+                            Voir tous les détails sur la page tarifs →
                         </Link>
                     </p>
                 </section>
