@@ -31,9 +31,13 @@ export default function Footer() {
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '3rem', marginBottom: '3rem' }}>
                     <div>
                         <div style={{ marginBottom: '1.25rem' }}>
-                            <span style={{ fontWeight: 900, fontSize: '1.6rem', letterSpacing: '-0.04em', color: 'var(--foreground)' }}>
-                                Opti<span style={{ color: '#f97316' }}>Pro</span>
-                            </span>
+                            <Image
+                                src="/logo.png"
+                                alt="OptiPro"
+                                width={120}
+                                height={40}
+                                style={{ objectFit: 'contain', mixBlendMode: 'multiply' }}
+                            />
                         </div>
                         <p style={{ color: 'var(--muted)', fontSize: '0.9rem', lineHeight: 1.7, maxWidth: '260px' }}>
                             Fait avec soin par Pierre, pour les artisans qui ont mieux à faire que de l&apos;admin.

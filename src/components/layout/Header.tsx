@@ -2,8 +2,8 @@
 
 import { useState, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTheme } from '@/components/ThemeProvider';
-
 import Button from '../ui/Button';
 
 export default function Header() {
@@ -32,15 +32,14 @@ export default function Header() {
         }}>
             <div className="container" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }} onClick={closeMenu}>
-                    <span style={{
-                        fontSize: '1.625rem',
-                        fontWeight: 800,
-                        letterSpacing: '-0.04em',
-                        color: 'var(--foreground)',
-                        lineHeight: 1,
-                    }}>
-                        Opti<span style={{ color: '#f97316' }}>Pro</span>
-                    </span>
+                    <Image
+                        src="/logo.png"
+                        alt="OptiPro"
+                        width={120}
+                        height={40}
+                        style={{ objectFit: 'contain', mixBlendMode: 'multiply' }}
+                        priority
+                    />
                 </Link>
 
                 {/* Desktop nav */}
