@@ -4,6 +4,7 @@ import "./globals.css";
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -36,11 +37,13 @@ export default function RootLayout({
   const isTeaserMode = false;
 
   return (
-    <html lang="fr">
+    <html lang="fr" data-theme="dark">
       <body className={outfit.className}>
-        {!isTeaserMode && <Header />}
-        <main>{children}</main>
-        {!isTeaserMode && <Footer />}
+        <ThemeProvider>
+          {!isTeaserMode && <Header />}
+          <div>{children}</div>
+          {!isTeaserMode && <Footer />}
+        </ThemeProvider>
       </body>
     </html>
   );

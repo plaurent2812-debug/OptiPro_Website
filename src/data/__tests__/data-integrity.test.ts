@@ -4,8 +4,8 @@ import { sectors } from '@/data/sectors';
 
 describe('Data integrity', () => {
     describe('optiboardPacks', () => {
-        it('has exactly 3 packs', () => {
-            expect(optiboardPacks).toHaveLength(3);
+        it('has exactly 2 packs', () => {
+            expect(optiboardPacks).toHaveLength(2);
         });
 
         it('all packs have required fields', () => {
@@ -27,11 +27,9 @@ describe('Data integrity', () => {
             expect(highlighted).toHaveLength(1);
         });
 
-        it('prices match Self-service 59, Accompagné 299, Premium 499', () => {
-            const selfService = optiboardPacks.find((p) => p.id === 'self-service');
+        it('prices match Accompagné 299, Premium 499', () => {
             const accompagne = optiboardPacks.find((p) => p.id === 'accompagne');
             const premium = optiboardPacks.find((p) => p.id === 'premium');
-            expect(selfService?.priceNum).toBe(59);
             expect(accompagne?.priceNum).toBe(299);
             expect(premium?.priceNum).toBe(499);
         });

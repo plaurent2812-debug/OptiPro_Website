@@ -39,7 +39,7 @@ function ContactForm() {
 
     if (status === 'success') {
         return (
-            <div style={{ maxWidth: '600px', margin: '0 auto', background: 'white', padding: '3rem 2rem', borderRadius: '1rem', border: '1px solid var(--border)', textAlign: 'center' }}>
+            <div style={{ maxWidth: '600px', margin: '0 auto', background: 'var(--surface)', padding: '3rem 2rem', borderRadius: '1.25rem', border: '1px solid var(--border)', textAlign: 'center' }}>
                 <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✅</div>
                 <h2 style={{ marginBottom: '1rem' }}>Demande envoyée !</h2>
                 <p style={{ color: 'var(--muted)', fontSize: '1.1rem', marginBottom: '2rem' }}>
@@ -51,9 +51,9 @@ function ContactForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit} style={{ maxWidth: '600px', margin: '0 auto', background: 'white', padding: '2rem', borderRadius: '1rem', border: '1px solid var(--border)' }}>
+        <form onSubmit={handleSubmit} style={{ maxWidth: '600px', margin: '0 auto', background: 'var(--surface)', padding: '2.25rem', borderRadius: '1.25rem', border: '1px solid var(--border)' }}>
             {status === 'error' && (
-                <div style={{ padding: '1rem', background: '#fee2e2', color: '#991b1b', borderRadius: '0.5rem', marginBottom: '1.5rem', textAlign: 'center' }}>
+                <div style={{ padding: '1rem', background: 'rgba(239,68,68,0.1)', color: '#fca5a5', borderRadius: '0.75rem', marginBottom: '1.5rem', textAlign: 'center', border: '1px solid rgba(239,68,68,0.2)' }}>
                     Une erreur est survenue. Veuillez réessayer ou nous contacter par email.
                 </div>
             )}
@@ -106,7 +106,6 @@ function ContactForm() {
                 <label htmlFor="plan" className="form-label">Plan envisagé</label>
                 <select id="plan" name="plan" className="form-select" defaultValue={initialPlan}>
                     <option value="">Je ne sais pas encore</option>
-                    <option value="self-service">Self-service — 59€/mois</option>
                     <option value="accompagne">Accompagné — 299€/mois</option>
                     <option value="premium">Premium — 499€/mois</option>
                 </select>
@@ -126,30 +125,35 @@ function ContactForm() {
 
 export default function ContactPage() {
     return (
-        <div className="container" style={{ padding: '4rem 1.5rem' }}>
-            <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-                <h1 style={{ marginBottom: '0.75rem' }}>Essai gratuit 14 jours</h1>
-                <p style={{ color: 'var(--muted)', fontSize: '1.15rem', maxWidth: '560px', margin: '0 auto' }}>
-                    <strong style={{ color: 'var(--primary)' }}>1 appel de 30 minutes</strong> avec Pierre —
-                    il configure tout, vous êtes opérationnel dès le lendemain.
-                </p>
-            </div>
+        <div style={{ minHeight: '100vh', background: 'var(--background)', paddingTop: 'var(--header-height)', transition: 'background 0.4s ease' }}>
+            <div className="container" style={{ padding: '4rem 1.5rem' }}>
+                <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                    <div className="section-label">🚀 Démarrer</div>
+                    <h1 style={{ fontSize: '2.75rem', fontWeight: 800, letterSpacing: '-0.03em', marginBottom: '1rem', color: 'var(--foreground)' }}>
+                        Essai gratuit 14 jours
+                    </h1>
+                    <p style={{ color: 'var(--secondary)', fontSize: '1.1rem', maxWidth: '520px', margin: '0 auto', lineHeight: 1.6 }}>
+                        <strong style={{ color: 'var(--foreground)' }}>1 appel de 30 minutes</strong> avec Pierre —
+                        il configure tout, vous êtes opérationnel dès le lendemain.
+                    </p>
+                </div>
 
-            <Suspense fallback={<div>Chargement du formulaire...</div>}>
-                <ContactForm />
-            </Suspense>
+                <Suspense fallback={<div style={{ textAlign: 'center', color: 'var(--muted)' }}>Chargement du formulaire...</div>}>
+                    <ContactForm />
+                </Suspense>
 
-            <div style={{ marginTop: '3rem', textAlign: 'center', color: 'var(--muted)' }}>
-                <p>Ou contactez Pierre directement :</p>
-                <p style={{ marginTop: '0.5rem', fontWeight: 'bold', color: 'var(--primary)' }}>
-                    <a href="mailto:contact@optipro.fr">contact@optipro.fr</a>
-                </p>
-                <p style={{ marginTop: '0.25rem', fontSize: '0.9rem' }}>
-                    Réponse garantie sous 24h ·{' '}
-                    <a href="https://www.linkedin.com/in/pierre-laurent-809410123?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
-                        LinkedIn
-                    </a>
-                </p>
+                <div style={{ marginTop: '3rem', textAlign: 'center', color: 'var(--muted)' }}>
+                    <p style={{ fontSize: '0.95rem' }}>Ou contactez Pierre directement :</p>
+                    <p style={{ marginTop: '0.5rem', fontWeight: 700, color: '#fb923c' }}>
+                        <a href="mailto:contact@optipro.fr" style={{ color: '#fb923c' }}>contact@optipro.fr</a>
+                    </p>
+                    <p style={{ marginTop: '0.25rem', fontSize: '0.875rem' }}>
+                        Réponse garantie sous 24h ·{' '}
+                        <a href="https://www.linkedin.com/in/pierre-laurent-809410123" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline', color: 'var(--secondary)' }}>
+                            LinkedIn
+                        </a>
+                    </p>
+                </div>
             </div>
         </div>
     );
