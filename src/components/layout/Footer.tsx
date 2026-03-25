@@ -34,8 +34,8 @@ export default function Footer() {
                             <Image
                                 src="/logo.png"
                                 alt="OptiPro"
-                                width={160}
-                                height={53}
+                                width={220}
+                                height={73}
                                 style={{ objectFit: 'contain', mixBlendMode: 'multiply' }}
                             />
                         </div>
