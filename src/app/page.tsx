@@ -3,7 +3,6 @@
 import { useEffect } from 'react';
 import Button from '@/components/ui/Button';
 import Link from 'next/link';
-import { useTheme } from '@/components/ThemeProvider';
 
 /* ── DATA ─────────────────────────────────────────── */
 
@@ -316,8 +315,6 @@ function HeroMockup() {
 /* ── PAGE ────────────────────────────────────────── */
 
 export default function Home() {
-    const { theme } = useTheme();
-
     useEffect(() => {
         const els = document.querySelectorAll<HTMLElement>('.reveal, .reveal-left, .reveal-right');
         const observer = new IntersectionObserver(
@@ -432,9 +429,7 @@ export default function Home() {
                 {/* ── PIERRE CALLOUT ───────────────────────────── */}
                 <section className="reveal" style={{ padding: '0 5% 5rem', maxWidth: '900px', margin: '0 auto' }}>
                     <div style={{
-                        background: theme === 'dark'
-                            ? 'linear-gradient(135deg, rgba(249,115,22,0.07), rgba(139,92,246,0.05))'
-                            : 'linear-gradient(135deg, rgba(249,115,22,0.06), rgba(255,255,255,0.8))',
+                    background: 'linear-gradient(135deg, rgba(249,115,22,0.06), rgba(255,255,255,0.8))',
                         border: '1px solid rgba(249,115,22,0.25)',
                         borderRadius: '1.5rem',
                         padding: '2.5rem 2rem',
@@ -472,18 +467,14 @@ export default function Home() {
                                     borderRadius: '1.5rem',
                                     padding: '2rem 1.75rem',
                                     background: f.highlighted
-                                        ? (theme === 'dark'
-                                            ? 'linear-gradient(145deg, #162236, #1e2f47)'
-                                            : 'linear-gradient(145deg, #fff7ed, #fff)')
+                                        ? 'linear-gradient(145deg, #fff7ed, #fff)'
                                         : 'var(--surface)',
                                     position: 'relative',
                                     border: f.highlighted
                                         ? '1px solid rgba(249,115,22,0.4)'
                                         : '1px solid var(--border)',
                                     boxShadow: f.highlighted
-                                        ? (theme === 'dark'
-                                            ? '0 25px 50px rgba(0,0,0,0.4), 0 0 30px rgba(249,115,22,0.1)'
-                                            : '0 25px 50px rgba(249,115,22,0.12), 0 0 30px rgba(249,115,22,0.08)')
+                                        ? '0 25px 50px rgba(249,115,22,0.12), 0 0 30px rgba(249,115,22,0.08)'
                                         : '0 4px 20px rgba(0,0,0,0.08)',
                                     transform: f.highlighted ? 'scale(1.03)' : 'none',
                                     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
@@ -499,7 +490,7 @@ export default function Home() {
                                 )}
                                 <h3 style={{
                                     fontSize: '1.5rem', fontWeight: 800, marginBottom: '0.25rem',
-                                    color: f.highlighted && theme === 'dark' ? '#f0f4ff' : 'var(--foreground)',
+                                    color: 'var(--foreground)',
                                 }}>{f.name}</h3>
                                 <div style={{ fontSize: '2.75rem', fontWeight: 800, color: '#f97316', marginBottom: '0.3rem', lineHeight: 1 }}>
                                     {f.price}€<span style={{ fontSize: '1rem', fontWeight: 400, color: 'var(--secondary)' }}>/mois</span>
@@ -507,7 +498,7 @@ export default function Home() {
                                 <p style={{ color: 'var(--secondary)', marginBottom: '1.5rem', fontSize: '0.9rem', lineHeight: 1.6 }}>{f.tagline}</p>
                                 <ul style={{ listStyle: 'none', padding: 0, marginBottom: '2rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                     {f.features.map((feat, i) => (
-                                        <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.88rem', color: f.highlighted && theme === 'dark' ? 'rgba(240,244,255,0.85)' : 'var(--secondary)' }}>
+                                        <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.88rem', color: 'var(--secondary)' }}>
                                             <span style={{ color: '#f97316', fontWeight: 700, flexShrink: 0, marginTop: '1px' }}>✓</span>
                                             <span>{feat}</span>
                                         </li>
@@ -573,9 +564,7 @@ export default function Home() {
                 <section className="reveal" style={{ padding: '0 5% 6rem', maxWidth: '1200px', margin: '0 auto' }}>
                     <div style={{
                         textAlign: 'center',
-                        background: theme === 'dark'
-                            ? 'linear-gradient(135deg, #0d1b2e 0%, #1a1040 50%, #0d1b2e 100%)'
-                            : 'linear-gradient(135deg, #fff7ed 0%, #ffffff 50%, #fef3c7 100%)',
+                        background: 'linear-gradient(135deg, #fff7ed 0%, #ffffff 50%, #fef3c7 100%)',
                         borderRadius: '2rem',
                         padding: '5rem 2rem',
                         border: '1px solid rgba(249,115,22,0.25)',
@@ -598,9 +587,9 @@ export default function Home() {
                         <h2 style={{
                             fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800,
                             letterSpacing: '-0.04em', marginBottom: '1rem', position: 'relative',
-                            color: theme === 'dark' ? 'rgba(255,255,255,0.15)' : 'var(--foreground)',
+                            color: 'var(--foreground)',
                             WebkitBackgroundClip: 'text',
-                            backgroundImage: theme === 'dark' ? 'linear-gradient(135deg, #f0f4ff 30%, rgba(249,115,22,0.7))' : 'linear-gradient(135deg, #0d1b2e 30%, #f97316)',
+                            backgroundImage: 'linear-gradient(135deg, #0d1b2e 30%, #f97316)',
                             WebkitTextFillColor: 'transparent',
                             backgroundClip: 'text',
                         }}>

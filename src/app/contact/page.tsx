@@ -53,8 +53,8 @@ function ContactForm() {
     return (
         <form onSubmit={handleSubmit} style={{ maxWidth: '600px', margin: '0 auto', background: 'var(--surface)', padding: '2.25rem', borderRadius: '1.25rem', border: '1px solid var(--border)' }}>
             {status === 'error' && (
-                <div style={{ padding: '1rem', background: 'rgba(239,68,68,0.1)', color: '#fca5a5', borderRadius: '0.75rem', marginBottom: '1.5rem', textAlign: 'center', border: '1px solid rgba(239,68,68,0.2)' }}>
-                    Une erreur est survenue. Veuillez réessayer ou nous contacter par email.
+                <div style={{ padding: '1rem', background: 'rgba(239,68,68,0.08)', color: '#991b1b', borderRadius: '0.75rem', marginBottom: '1.5rem', textAlign: 'center', border: '1px solid rgba(239,68,68,0.25)', fontWeight: 500 }}>
+                    ⚠️ Une erreur est survenue. Veuillez réessayer ou nous contacter par email.
                 </div>
             )}
             <div className="form-group">
@@ -116,8 +116,29 @@ function ContactForm() {
                 <textarea id="message" name="message" className="form-textarea" placeholder="Ex : je passe mes soirées à faire des devis, j'ai des impayés depuis 3 mois..."></textarea>
             </div>
 
-            <Button type="submit" variant="primary" style={{ width: '100%', opacity: isLoading ? 0.7 : 1 }} disabled={isLoading}>
-                {isLoading ? 'Envoi en cours...' : 'Démarrer l\'essai gratuit — Pierre me contacte sous 24h'}
+            <Button
+                type="submit"
+                variant="primary"
+                style={{ width: '100%', opacity: isLoading ? 0.85 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem' }}
+                disabled={isLoading}
+            >
+                {isLoading ? (
+                    <>
+                        <span style={{
+                            display: 'inline-block',
+                            width: '16px',
+                            height: '16px',
+                            border: '2px solid rgba(255,255,255,0.35)',
+                            borderTopColor: '#fff',
+                            borderRadius: '50%',
+                            animation: 'spinSlow 0.7s linear infinite',
+                            flexShrink: 0,
+                        }} />
+                        Envoi en cours...
+                    </>
+                ) : (
+                    'Démarrer l\'essai gratuit — Pierre me contacte sous 24h'
+                )}
             </Button>
         </form>
     );
@@ -125,7 +146,7 @@ function ContactForm() {
 
 export default function ContactPage() {
     return (
-        <div style={{ minHeight: '100vh', background: 'var(--background)', paddingTop: 'var(--header-height)', transition: 'background 0.4s ease' }}>
+        <div style={{ minHeight: '100vh', background: 'var(--background)', paddingTop: 'var(--header-height)' }}>
             <div className="container" style={{ padding: '4rem 1.5rem' }}>
                 <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
                     <div className="section-label">🚀 Démarrer</div>

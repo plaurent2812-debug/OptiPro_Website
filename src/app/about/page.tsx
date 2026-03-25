@@ -22,7 +22,7 @@ const notUs = [
 
 export default function AboutPage() {
     return (
-        <div style={{ minHeight: '100vh', background: 'var(--background)', paddingTop: 'var(--header-height)', transition: 'background 0.4s ease' }}>
+        <div style={{ minHeight: '100vh', background: 'var(--background)', paddingTop: 'var(--header-height)' }}>
             <style>{`
                 .sec-card { transition: border-color .25s, box-shadow .25s; }
                 .sec-card:hover { border-color: rgba(249,115,22,0.35) !important; box-shadow: 0 0 25px rgba(249,115,22,0.12) !important; }

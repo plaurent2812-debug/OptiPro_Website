@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Button from "@/components/ui/Button";
+import FaqAccordion from "@/components/ui/FaqAccordion";
 
 export const metadata: Metadata = {
     title: "Tarifs & Services — OptiBoard",
     description: "2 formules à partir de 299€/mois. Gestion admin complète : devis Telegram, planning intégré, sync Pennylane, exports compta. Essai gratuit 14 jours.",
 };
+
 
 const plans = [
     {
@@ -92,7 +94,7 @@ const faq = [
 
 export default function ServicesPage() {
     return (
-        <div style={{ minHeight: '100vh', background: 'var(--background)', paddingTop: 'var(--header-height)', transition: 'background 0.4s ease' }}>
+        <div style={{ minHeight: '100vh', background: 'var(--background)', paddingTop: 'var(--header-height)' }}>
             <div className="container" style={{ padding: '4rem 1.5rem' }}>
 
                 {/* Header */}
@@ -139,7 +141,7 @@ export default function ServicesPage() {
                         {plans.map((plan) => (
                             <div
                                 key={plan.id}
-                                className={plan.highlighted ? 'plan-highlighted' : ''}
+                                className={`plan-card${plan.highlighted ? ' plan-highlighted plan-card--highlighted' : ''}`}
                                 style={{
                                     borderRadius: '1.5rem',
                                     padding: '2.25rem 2rem',
@@ -233,37 +235,28 @@ export default function ServicesPage() {
                         <div className="section-label">❓ FAQ</div>
                         <h2 style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.02em' }}>Questions fréquentes</h2>
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        {faq.map((item, i) => (
-                            <div key={i} style={{
-                                background: 'var(--surface)', border: '1px solid var(--border)',
-                                borderRadius: '1rem', padding: '1.5rem 1.75rem',
-                            }}>
-                                <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--foreground)' }}>{item.q}</h3>
-                                <p style={{ color: 'var(--secondary)', margin: 0, lineHeight: 1.7, fontSize: '0.92rem' }}>{item.a}</p>
-                            </div>
-                        ))}
-                    </div>
+                    <FaqAccordion items={faq} />
                 </section>
 
                 {/* CTA */}
                 <div className="cta-section" style={{
                     textAlign: 'center',
-                    background: 'var(--primary)',
+                    background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
                     borderRadius: '2rem',
                     padding: '4rem 2rem',
-                    border: '1px solid rgba(249,115,22,0.2)',
+                    border: '1px solid rgba(249,115,22,0.25)',
                     position: 'relative',
                     overflow: 'hidden',
                 }}>
-                    <div style={{ position: 'absolute', top: '-60px', right: '-60px', width: '250px', height: '250px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(249,115,22,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+                    <div style={{ position: 'absolute', top: '-60px', right: '-60px', width: '250px', height: '250px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(249,115,22,0.18) 0%, transparent 70%)', pointerEvents: 'none' }} />
+                    <div style={{ position: 'absolute', bottom: '-40px', left: '-40px', width: '200px', height: '200px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)', pointerEvents: 'none' }} />
                     <h2 style={{ fontSize: '2.25rem', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '1rem', color: '#fff' }}>
                         Prêt à automatiser votre admin ?
                     </h2>
                     <p style={{ opacity: 0.75, marginBottom: '2.5rem', fontSize: '1.1rem', color: '#fff', maxWidth: '500px', margin: '0 auto 2.5rem', lineHeight: 1.6 }}>
                         14 jours d&apos;essai gratuit. Un appel de 30 min avec Pierre, et vous êtes opérationnel dès le lendemain.
                     </p>
-                    <Button href="/contact" variant="primary" style={{ fontSize: '1.1rem', padding: '1rem 2.5rem', borderRadius: '0.875rem', fontWeight: 700, background: '#f97316', color: '#fff' }}>
+                    <Button href="/contact" variant="primary" style={{ fontSize: '1.1rem', padding: '1rem 2.5rem', borderRadius: '0.875rem', fontWeight: 700 }}>
                         Démarrer l&apos;essai gratuit →
                     </Button>
                 </div>

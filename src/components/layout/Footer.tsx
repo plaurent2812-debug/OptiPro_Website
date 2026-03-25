@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 export default function Footer() {
     return (
-        <footer style={{ backgroundColor: 'var(--background)', borderTop: '1px solid var(--border)', padding: '4rem 0 2rem', position: 'relative', overflow: 'hidden', transition: 'background 0.4s ease' }}>
+        <footer style={{ backgroundColor: 'var(--background)', borderTop: '1px solid var(--border)', padding: '4rem 0 2rem', position: 'relative', overflow: 'hidden' }}>
             {/* Top accent line */}
             <div style={{
                 position: 'absolute',
@@ -99,10 +99,28 @@ export default function Footer() {
                     <p style={{ color: 'var(--muted)', fontSize: '0.85rem' }}>
                         &copy; {new Date().getFullYear()} OptiBoard. Admin chantier automatisée via Telegram et Pennylane.
                     </p>
-                    <div style={{ display: 'flex', gap: '1.5rem', opacity: 0.5 }}>
-                        <span style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>📊 Pennylane</span>
-                        <span style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>💬 Telegram</span>
-                        <span style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>💳 Stripe</span>
+                    <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                        <Link
+                            href="/mentions-legales"
+                            style={{ fontSize: '0.85rem', color: 'var(--muted)', transition: 'color 0.2s', textDecoration: 'none' }}
+                            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--secondary)')}
+                            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
+                        >
+                            Mentions légales
+                        </Link>
+                        <Link
+                            href="/confidentialite"
+                            style={{ fontSize: '0.85rem', color: 'var(--muted)', transition: 'color 0.2s', textDecoration: 'none' }}
+                            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--secondary)')}
+                            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
+                        >
+                            Confidentialité
+                        </Link>
+                        <div style={{ display: 'flex', gap: '1rem', opacity: 0.45 }}>
+                            <span style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>📊 Pennylane</span>
+                            <span style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>💬 Telegram</span>
+                            <span style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>💳 Stripe</span>
+                        </div>
                     </div>
                 </div>
             </div>

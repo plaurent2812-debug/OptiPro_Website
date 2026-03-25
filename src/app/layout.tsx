@@ -4,6 +4,7 @@ import "./globals.css";
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import PageTransition from "@/components/layout/PageTransition";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 const outfit = Outfit({ subsets: ["latin"] });
@@ -37,11 +38,11 @@ export default function RootLayout({
   const isTeaserMode = false;
 
   return (
-    <html lang="fr" data-theme="dark">
+    <html lang="fr" data-theme="light">
       <body className={outfit.className}>
         <ThemeProvider>
           {!isTeaserMode && <Header />}
-          <div>{children}</div>
+          <PageTransition>{children}</PageTransition>
           {!isTeaserMode && <Footer />}
         </ThemeProvider>
       </body>
