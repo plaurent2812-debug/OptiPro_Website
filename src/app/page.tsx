@@ -102,48 +102,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== METRICS STRIP ===== */}
-      <section style={{
-        padding: '3rem 0',
-        background: 'var(--surface)',
-        borderBottom: '1px solid var(--border)',
-      }}>
-        <div className="container">
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '4rem',
-            flexWrap: 'wrap',
-          }}>
-            {[
-              { value: '50+', label: 'automatisations livrées' },
-              { value: '12', label: 'clients accompagnés' },
-              { value: '98%', label: 'de satisfaction' },
-            ].map((metric) => (
-              <div key={metric.label} style={{ textAlign: 'center' }}>
-                <div style={{
-                  fontSize: '2.5rem',
-                  fontWeight: 800,
-                  color: 'var(--primary)',
-                  lineHeight: 1,
-                  marginBottom: '0.35rem',
-                  fontFamily: 'var(--font-display), sans-serif',
-                }}>
-                  {metric.value}
-                </div>
-                <div style={{
-                  fontSize: '0.9rem',
-                  color: 'var(--muted)',
-                  fontWeight: 500,
-                }}>
-                  {metric.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <div className="section-divider" />
 
       {/* ===== LE PROBLÈME ===== */}
