@@ -1207,6 +1207,68 @@ h1, h2, h3 {
   align-items: center;
 }
 
+/* ============================================
+   Header nav links
+   ============================================ */
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--foreground) !important;
+  background: rgba(0,0,0,0.05) !important;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s ease, left 0.3s ease;
+  border-radius: 1px;
+}
+
+.nav-link:hover::after {
+  width: 60%;
+  left: 20%;
+}
+
+/* ============================================
+   Footer links
+   ============================================ */
+
+.footer-link {
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--accent) !important;
+}
+
+.footer-link--muted:hover {
+  color: var(--secondary) !important;
+}
+
+/* ============================================
+   Footer animated accent line
+   ============================================ */
+
+.footer-accent-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  background-size: 200% 100%;
+  animation: accentSlide 8s ease-in-out infinite;
+}
+
+@keyframes accentSlide {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
 @media (max-width: 900px) {
   .service-showcase-grid {
     grid-template-columns: 1fr;

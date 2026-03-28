@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -17,6 +17,14 @@ export default function Header() {
 
     const closeMenu = useCallback(() => {
         setMenuOpen(false);
+    }, []);
+
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 20);
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     const navLinks = [
@@ -36,6 +44,8 @@ export default function Header() {
             WebkitBackdropFilter: 'blur(20px)',
             zIndex: 1000,
             top: 0,
+            boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.08)' : 'none',
+            transition: 'box-shadow 0.3s ease',
         }}>
             <div className="container" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }} onClick={closeMenu}>
@@ -50,29 +60,16 @@ export default function Header() {
                             <Link
                                 key={href}
                                 href={href}
+                                className="nav-link"
                                 style={{
-                                    fontWeight: isActive ? 600 : 500,
-                                    color: isActive ? 'var(--accent)' : 'var(--secondary)',
-                                    padding: '0.5rem 1rem',
-                                    borderRadius: '0.5rem',
-                                    fontSize: '0.95rem',
-                                    transition: 'color 0.2s, background 0.2s',
-                                    textDecoration: isActive ? 'underline' : 'none',
-                                    textUnderlineOffset: '4px',
-                                    textDecorationThickness: '2px',
-                                    background: isActive ? 'rgba(249,115,22,0.07)' : 'transparent',
-                                }}
-                                onMouseEnter={(e) => {
-                                    if (!isActive) {
-                                        (e.currentTarget as HTMLAnchorElement).style.color = 'var(--foreground)';
-                                        (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(0,0,0,0.05)';
-                                    }
-                                }}
-                                onMouseLeave={(e) => {
-                                    if (!isActive) {
-                                        (e.currentTarget as HTMLAnchorElement).style.color = 'var(--secondary)';
-                                        (e.currentTarget as HTMLAnchorElement).style.background = 'transparent';
-                                    }
+                                    fontSize: '0.9rem',
+                                    fontWeight: 500,
+                                    color: isActive ? 'var(--foreground)' : 'var(--secondary)',
+                                    padding: '0.4rem 0.85rem',
+                                    borderRadius: '8px',
+                                    transition: 'all 0.3s ease',
+                                    position: 'relative' as const,
+                                    background: isActive ? 'rgba(0,0,0,0.05)' : 'transparent',
                                 }}
                             >
                                 {label}

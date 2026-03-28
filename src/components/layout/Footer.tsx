@@ -8,12 +8,10 @@ export default function Footer() {
     return (
         <footer style={{ backgroundColor: 'var(--background)', borderTop: '1px solid var(--border)', padding: '4rem 0 2rem', position: 'relative', overflow: 'hidden' }}>
             {/* Top accent line */}
-            <div style={{
-                position: 'absolute',
-                top: 0, left: 0, right: 0,
-                height: '2px',
-                background: 'linear-gradient(90deg, transparent, var(--accent), transparent)',
-            }} />
+            <div
+                className="footer-accent-line"
+                style={{ position: 'absolute', top: 0, left: 0, right: 0 }}
+            />
 
             {/* Background glow */}
             <div style={{
@@ -55,9 +53,8 @@ export default function Footer() {
                                 <li key={href}>
                                     <Link
                                         href={href}
-                                        style={{ color: 'var(--secondary)', fontSize: '0.95rem', transition: 'color 0.2s' }}
-                                        onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--foreground)')}
-                                        onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--secondary)')}
+                                        className="footer-link"
+                                        style={{ color: 'var(--secondary)', fontSize: '0.95rem' }}
                                     >
                                         {label}
                                     </Link>
@@ -71,9 +68,10 @@ export default function Footer() {
                         <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem', color: 'var(--secondary)', fontSize: '0.95rem' }}>
                             <li>Pierre Laurent — Fondateur</li>
                             <li>
-                                <a href="mailto:contact@optipro.fr" style={{ color: 'var(--secondary)', transition: 'color 0.2s' }}
-                                    onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
-                                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--secondary)')}
+                                <a
+                                    href="mailto:contact@optipro.fr"
+                                    className="footer-link"
+                                    style={{ color: 'var(--secondary)' }}
                                 >
                                     contact@optipro.fr
                                 </a>
@@ -83,9 +81,8 @@ export default function Footer() {
                                     href="https://www.linkedin.com/in/pierre-laurent-809410123"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    style={{ color: 'var(--secondary)', transition: 'color 0.2s' }}
-                                    onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--foreground)')}
-                                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--secondary)')}
+                                    className="footer-link"
+                                    style={{ color: 'var(--secondary)' }}
                                 >
                                     LinkedIn →
                                 </a>
@@ -101,17 +98,15 @@ export default function Footer() {
                     <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
                         <Link
                             href="/mentions-legales"
-                            style={{ fontSize: '0.85rem', color: 'var(--muted)', transition: 'color 0.2s', textDecoration: 'none' }}
-                            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--secondary)')}
-                            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
+                            className="footer-link footer-link--muted"
+                            style={{ fontSize: '0.85rem', color: 'var(--muted)', textDecoration: 'none' }}
                         >
                             Mentions légales
                         </Link>
                         <Link
                             href="/confidentialite"
-                            style={{ fontSize: '0.85rem', color: 'var(--muted)', transition: 'color 0.2s', textDecoration: 'none' }}
-                            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--secondary)')}
-                            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
+                            className="footer-link footer-link--muted"
+                            style={{ fontSize: '0.85rem', color: 'var(--muted)', textDecoration: 'none' }}
                         >
                             Confidentialité
                         </Link>
