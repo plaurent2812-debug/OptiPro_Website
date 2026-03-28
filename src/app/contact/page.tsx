@@ -36,8 +36,14 @@ function ContactForm() {
 
     if (status === 'success') {
         return (
-            <div style={{ maxWidth: '600px', margin: '0 auto', background: 'var(--surface)', padding: '3rem 2rem', borderRadius: '1.25rem', border: '1px solid var(--border)', textAlign: 'center' }}>
-                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✅</div>
+            <div style={{ maxWidth: '600px', margin: '0 auto', background: 'var(--surface)', padding: '3rem 2rem', borderRadius: '1.25rem', border: '1px solid var(--border)', textAlign: 'center', animation: 'fadeUp 0.5s ease-out' }}>
+                <div style={{
+                  fontSize: '3rem',
+                  marginBottom: '1rem',
+                  animation: 'numberPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                }}>
+                  ✓
+                </div>
                 <h2 style={{ marginBottom: '1rem' }}>Demande envoyée !</h2>
                 <p style={{ color: 'var(--muted)', fontSize: '1.1rem', marginBottom: '2rem' }}>
                     Merci. Pierre vous contactera dans les 24h pour organiser votre onboarding de 30 minutes.
