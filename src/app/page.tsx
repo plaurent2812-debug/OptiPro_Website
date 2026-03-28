@@ -19,7 +19,7 @@ export default function HomePage() {
         entries.forEach((e) => {
           if (e.isIntersecting) e.target.classList.add('visible');
         }),
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
     reveals.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
@@ -57,7 +57,10 @@ export default function HomePage() {
             {/* Mini timeline visual */}
             <div className={styles.heroVisual}>
               <div className={styles.heroCard}>
-                <div className={styles.heroCardTitle}>Démarche OptiPro</div>
+                <div className={styles.heroCardTitle}>
+                  <span style={{ color: '#10b981', marginRight: '0.5rem', fontFamily: 'monospace' }}>$</span>
+                  Démarche OptiPro
+                </div>
                 {services.map((s) => (
                   <div key={s.id} className={styles.heroStep}>
                     <div className={styles.heroStepNum}>{s.number}</div>
@@ -75,30 +78,44 @@ export default function HomePage() {
 
       {/* ===== LE PROBLÈME ===== */}
       <section className="reveal" style={{ padding: '5rem 0' }}>
-        <div className="container" style={{ maxWidth: '700px', textAlign: 'center' }}>
-          <h2
-            style={{
-              fontSize: '2rem',
-              fontWeight: 800,
-              color: 'var(--primary)',
-              marginBottom: '1.5rem',
-            }}
-          >
-            Vous perdez du temps sur des tâches qui ne sont pas votre métier
-          </h2>
-          <p
-            style={{
-              color: 'var(--secondary)',
-              fontSize: '1.1rem',
-              lineHeight: 1.7,
-            }}
-          >
-            Outils mal adaptés, tableurs à rallonge, process manuels,
-            relances oubliées. Résultat : vous passez des heures sur
-            l&apos;admin au lieu de vous concentrer sur votre activité. Et
-            quand un outil ne marche pas, personne n&apos;est là pour le
-            régler.
-          </p>
+        <div className="container">
+          <div className="problem-grid">
+            <div>
+              <h2
+                style={{
+                  fontSize: '2rem',
+                  fontWeight: 800,
+                  color: 'var(--primary)',
+                  marginBottom: '1.5rem',
+                  lineHeight: 1.2,
+                }}
+              >
+                Vous perdez du temps sur des tâches qui ne sont pas votre métier
+              </h2>
+              <p
+                style={{
+                  color: 'var(--secondary)',
+                  fontSize: '1.05rem',
+                  lineHeight: 1.7,
+                }}
+              >
+                Et quand un outil ne marche pas, personne n&apos;est là pour le régler.
+              </p>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              {[
+                'Outils mal adaptés à votre activité',
+                'Tableurs à rallonge, process manuels',
+                'Relances oubliées, factures en retard',
+                "Des heures perdues sur l'admin",
+              ].map((item) => (
+                <div key={item} className="pain-point">
+                  <span style={{ color: 'var(--danger)', fontSize: '1.1rem', flexShrink: 0 }}>✕</span>
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
