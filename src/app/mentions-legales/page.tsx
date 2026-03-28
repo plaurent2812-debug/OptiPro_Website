@@ -57,8 +57,15 @@ export default function MentionsLegalesPage() {
           </p>
           <p style={paragraphStyle}>
             <strong>Pierre Laurent</strong><br />
-            Activité : Conseil &amp; développement d&apos;outils numériques sur mesure<br />
+            Entrepreneur individuel<br />
             Dénomination commerciale : <strong>OptiPro</strong><br />
+            Activité : Conseil &amp; développement d&apos;outils numériques sur mesure<br />
+            Siège : Bâtiment Le Matisse, 541 Avenue Colonel Meyère, 06140 Vence<br />
+            SIREN : 934 301 987<br />
+            SIRET : 934 301 987 00020<br />
+            Code APE : 70.22Z — Conseil pour les affaires et autres conseils de gestion<br />
+            TVA : Non assujetti (franchise en base de TVA, article 293 B du CGI)<br />
+            Directeur de la publication : Pierre Laurent<br />
             Email : <a href="mailto:contact@optipro.fr" style={linkStyle}>contact@optipro.fr</a><br />
             Site web : <a href="https://optipro.fr" style={linkStyle}>optipro.fr</a>
           </p>
