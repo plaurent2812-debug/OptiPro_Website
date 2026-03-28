@@ -12,7 +12,7 @@ import { projects } from '@/data/projects';
 
 export default function HomePage() {
   useEffect(() => {
-    const reveals = document.querySelectorAll('.reveal');
+    const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
     if (!reveals.length) return;
     const obs = new IntersectionObserver(
       (entries) =>
@@ -30,6 +30,29 @@ export default function HomePage() {
       {/* ===== HERO ===== */}
       <section className={styles.hero}>
         <div className="container">
+          {/* Decorative elements */}
+          <div style={{
+            position: 'absolute',
+            top: '15%',
+            right: '5%',
+            width: '300px',
+            height: '300px',
+            borderRadius: '50%',
+            background: 'rgba(249, 115, 22, 0.03)',
+            filter: 'blur(60px)',
+            pointerEvents: 'none',
+          }} />
+          <div style={{
+            position: 'absolute',
+            bottom: '10%',
+            left: '-5%',
+            width: '200px',
+            height: '200px',
+            borderRadius: '50%',
+            background: 'rgba(249, 115, 22, 0.04)',
+            filter: 'blur(40px)',
+            pointerEvents: 'none',
+          }} />
           <div className={styles.heroGrid}>
             <div className={styles.heroText}>
               <span className={styles.heroBadge}>
@@ -76,8 +99,52 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ===== METRICS STRIP ===== */}
+      <section style={{
+        padding: '3rem 0',
+        background: 'var(--surface)',
+        borderBottom: '1px solid var(--border)',
+      }}>
+        <div className="container">
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '4rem',
+            flexWrap: 'wrap',
+          }}>
+            {[
+              { value: '50+', label: 'automatisations livrées' },
+              { value: '12', label: 'clients accompagnés' },
+              { value: '98%', label: 'de satisfaction' },
+            ].map((metric) => (
+              <div key={metric.label} style={{ textAlign: 'center' }}>
+                <div style={{
+                  fontSize: '2.5rem',
+                  fontWeight: 800,
+                  color: 'var(--primary)',
+                  lineHeight: 1,
+                  marginBottom: '0.35rem',
+                  fontFamily: 'var(--font-display), sans-serif',
+                }}>
+                  {metric.value}
+                </div>
+                <div style={{
+                  fontSize: '0.9rem',
+                  color: 'var(--muted)',
+                  fontWeight: 500,
+                }}>
+                  {metric.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
       {/* ===== LE PROBLÈME ===== */}
-      <section className="reveal" style={{ padding: '5rem 0' }}>
+      <section className="reveal-left" style={{ padding: '5rem 0' }}>
         <div className="container">
           <div className="problem-grid">
             <div>
@@ -119,6 +186,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <div className="section-divider" />
+
       {/* ===== DÉMARCHE 4 ÉTAPES ===== */}
       <section
         className="reveal"
@@ -152,8 +221,10 @@ export default function HomePage() {
         </div>
       </section>
 
+      <div className="section-divider" />
+
       {/* ===== RÉALISATIONS ===== */}
-      <section className="reveal" style={{ padding: '5rem 0' }}>
+      <section className="reveal-right" style={{ padding: '5rem 0' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <h2
