@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Outfit, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
 import Header from "@/components/layout/Header";
@@ -7,7 +7,8 @@ import Footer from "@/components/layout/Footer";
 import PageTransition from "@/components/layout/PageTransition";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-const outfit = Outfit({ subsets: ["latin"] });
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-body" });
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-display" });
 
 export const metadata: Metadata = {
   title: {
@@ -27,7 +28,7 @@ export default function RootLayout({
 
   return (
     <html lang="fr" data-theme="light">
-      <body className={outfit.className}>
+      <body className={`${outfit.variable} ${spaceGrotesk.variable}`}>
         <ThemeProvider>
           {!isTeaserMode && <Header />}
           <PageTransition>{children}</PageTransition>
