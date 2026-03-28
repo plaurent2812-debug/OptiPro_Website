@@ -20,9 +20,9 @@ export default function Header() {
     }, []);
 
     const navLinks = [
-        { href: '/services', label: 'Tarifs' },
-        { href: '/sectors', label: 'Secteurs BTP' },
-        { href: '/about', label: 'Notre approche' },
+        { href: '/services', label: 'Services' },
+        { href: '/realisations', label: 'Réalisations' },
+        { href: '/contact', label: 'Contact' },
     ];
 
     return (
@@ -84,7 +84,7 @@ export default function Header() {
                         variant="primary"
                         style={{ marginLeft: '0.75rem', fontSize: '0.9rem', padding: '0.6rem 1.25rem' }}
                     >
-                        Essai gratuit 14 jours
+                        Demander un contact
                     </Button>
                 </nav>
 
@@ -184,7 +184,7 @@ export default function Header() {
                 })}
                 <div style={{ marginTop: '1rem' }}>
                     <Button href="/contact" variant="primary" style={{ width: '100%', textAlign: 'center' }}>
-                        Essai gratuit 14 jours
+                        Demander un contact
                     </Button>
                 </div>
             </div>

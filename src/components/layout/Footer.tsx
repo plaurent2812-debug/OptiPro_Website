@@ -40,7 +40,7 @@ export default function Footer() {
                             />
                         </div>
                         <p style={{ color: 'var(--muted)', fontSize: '0.9rem', lineHeight: 1.7, maxWidth: '260px' }}>
-                            Fait avec soin par Pierre, pour les artisans qui ont mieux à faire que de l&apos;admin.
+                            Conseil &amp; développement sur mesure pour artisans, TPE et indépendants.
                         </p>
                     </div>
 
@@ -48,9 +48,8 @@ export default function Footer() {
                         <h4 style={{ color: 'var(--muted)', marginBottom: '1.25rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Navigation</h4>
                         <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                             {[
-                                { href: '/services', label: 'Tarifs' },
-                                { href: '/sectors', label: 'Secteurs BTP' },
-                                { href: '/about', label: 'Notre approche' },
+                                { href: '/services', label: 'Services' },
+                                { href: '/realisations', label: 'Réalisations' },
                                 { href: '/contact', label: 'Contact' },
                             ].map(({ href, label }) => (
                                 <li key={href}>
@@ -97,7 +96,7 @@ export default function Footer() {
 
                 <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
                     <p style={{ color: 'var(--muted)', fontSize: '0.85rem' }}>
-                        &copy; {new Date().getFullYear()} OptiBoard. Admin chantier automatisée via Telegram et Pennylane.
+                        &copy; {new Date().getFullYear()} OptiPro. Conseil &amp; développement sur mesure.
                     </p>
                     <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
                         <Link
@@ -116,11 +115,6 @@ export default function Footer() {
                         >
                             Confidentialité
                         </Link>
-                        <div style={{ display: 'flex', gap: '1rem', opacity: 0.45 }}>
-                            <span style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>📊 Pennylane</span>
-                            <span style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>💬 Telegram</span>
-                            <span style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>💳 Stripe</span>
-                        </div>
                     </div>
                 </div>
             </div>

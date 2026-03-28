@@ -11,23 +11,11 @@ const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "OptiBoard — Admin chantier automatisée pour artisans",
-    template: "%s | OptiBoard",
+    default: 'OptiPro — Conseil & développement sur mesure',
+    template: '%s | OptiPro',
   },
-  description: "Créez vos devis en 2 min depuis Telegram, synchronisés avec Pennylane. Essai gratuit 14 jours.",
-  metadataBase: new URL("https://optipro.fr"),
-  openGraph: {
-    type: "website",
-    locale: "fr_FR",
-    siteName: "OptiBoard",
-    title: "OptiBoard — Admin chantier automatisée pour artisans",
-    description: "Envoyez un message depuis votre chantier, on s'occupe du reste. Devis par Telegram, sync Pennylane. Essai gratuit 14 jours.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "OptiBoard — Admin chantier automatisée pour artisans",
-    description: "Créez vos devis en 2 min depuis Telegram, synchronisés avec Pennylane. Essai gratuit 14 jours.",
-  },
+  description:
+    'Audit, création de sites et web apps sur mesure, automatisation — OptiPro accompagne artisans, TPE et indépendants dans leur transformation numérique.',
 };
 
 export default function RootLayout({
