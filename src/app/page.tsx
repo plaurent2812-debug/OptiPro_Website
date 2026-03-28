@@ -3,8 +3,11 @@
 import { useEffect } from 'react';
 import styles from './HomePage.module.css';
 import Button from '@/components/ui/Button';
-import ServiceStep from '@/components/ui/ServiceStep';
 import ProjectCard from '@/components/ui/ProjectCard';
+import AuditMockup from '@/components/visuals/AuditMockup';
+import AnalyseMockup from '@/components/visuals/AnalyseMockup';
+import CreationMockup from '@/components/visuals/CreationMockup';
+import AutomationMockup from '@/components/visuals/AutomationMockup';
 import AuditCta from '@/components/ui/AuditCta';
 import OptiboardTeaser from '@/components/ui/OptiboardTeaser';
 import { services } from '@/data/services';
@@ -188,35 +191,111 @@ export default function HomePage() {
 
       <div className="section-divider" />
 
-      {/* ===== DÉMARCHE 4 ÉTAPES ===== */}
-      <section
-        className="reveal"
-        style={{
-          padding: '5rem 0',
-          background: 'var(--background)',
-        }}
-      >
+      {/* ===== SERVICE 1: AUDIT ===== */}
+      <section className="reveal service-showcase">
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2
-              style={{
-                fontSize: '2rem',
-                fontWeight: 800,
-                color: 'var(--primary)',
-                marginBottom: '0.75rem',
-              }}
-            >
-              Une démarche en 4 étapes
-            </h2>
-            <p style={{ color: 'var(--secondary)', fontSize: '1.05rem' }}>
-              De l&apos;audit à l&apos;automatisation, chaque étape est
-              concrète et mesurable.
-            </p>
+          <div className="service-showcase-grid">
+            <div className="service-showcase-text">
+              <span className="service-showcase-label">Étape 1 · Audit</span>
+              <h2 className="service-showcase-title">
+                On commence par comprendre<br />votre réalité
+              </h2>
+              <p className="service-showcase-desc">
+                Je passe en revue vos outils, vos process quotidiens et
+                vos points de friction. Vous repartez avec un diagnostic
+                clair et des recommandations priorisées.
+              </p>
+              <ul className="service-showcase-features">
+                <li>Cartographie complète de vos outils</li>
+                <li>Identification des points de friction</li>
+                <li>Rapport détaillé avec plan d&apos;action</li>
+                <li>Remboursé si contrat signé</li>
+              </ul>
+            </div>
+            <div className="service-showcase-visual">
+              <AuditMockup />
+            </div>
           </div>
-          <div className="timeline">
-            {services.map((s) => (
-              <ServiceStep key={s.id} step={s} />
-            ))}
+        </div>
+      </section>
+
+      {/* ===== SERVICE 2: ANALYSE ===== */}
+      <section className="reveal-right service-showcase">
+        <div className="container">
+          <div className="service-showcase-grid reversed">
+            <div className="service-showcase-text">
+              <span className="service-showcase-label">Étape 2 · Analyse</span>
+              <h2 className="service-showcase-title">
+                Chaque minute perdue<br />a un coût
+              </h2>
+              <p className="service-showcase-desc">
+                À partir de l&apos;audit, je priorise les sujets qui vous
+                bloquent ou vous coûtent le plus. On définit ensemble un
+                plan d&apos;action concret, adapté à votre budget.
+              </p>
+              <ul className="service-showcase-features">
+                <li>Blocages priorisés par impact</li>
+                <li>Estimation des gains de temps</li>
+                <li>Solutions recommandées et chiffrées</li>
+              </ul>
+            </div>
+            <div className="service-showcase-visual">
+              <AnalyseMockup />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SERVICE 3: CRÉATION ===== */}
+      <section className="reveal service-showcase">
+        <div className="container">
+          <div className="service-showcase-grid">
+            <div className="service-showcase-text">
+              <span className="service-showcase-label">Étape 3 · Création</span>
+              <h2 className="service-showcase-title">
+                Des outils construits<br />pour votre métier
+              </h2>
+              <p className="service-showcase-desc">
+                Site vitrine, application web, tableau de bord, espace
+                client — chaque solution est conçue sur mesure. Pas de
+                template générique, pas de compromis.
+              </p>
+              <ul className="service-showcase-features">
+                <li>Design sur mesure, responsive</li>
+                <li>Maquettes validées avant développement</li>
+                <li>Formation et accompagnement inclus</li>
+              </ul>
+            </div>
+            <div className="service-showcase-visual">
+              <CreationMockup />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SERVICE 4: AUTOMATISATION ===== */}
+      <section className="reveal-left service-showcase">
+        <div className="container">
+          <div className="service-showcase-grid reversed">
+            <div className="service-showcase-text">
+              <span className="service-showcase-label">Étape 4 · Automatisation</span>
+              <h2 className="service-showcase-title">
+                Vos outils se parlent.<br />Le répétitif disparaît.
+              </h2>
+              <p className="service-showcase-desc">
+                Je connecte vos outils entre eux et j&apos;automatise les
+                tâches répétitives. Devis, relances, synchronisations,
+                exports — tout tourne sans que vous y pensiez.
+              </p>
+              <ul className="service-showcase-features">
+                <li>Workflows automatisés sur mesure</li>
+                <li>Intégrations entre vos outils existants</li>
+                <li>Zéro intervention manuelle au quotidien</li>
+              </ul>
+            </div>
+            <div className="service-showcase-visual">
+              <AutomationMockup />
+            </div>
           </div>
         </div>
       </section>
