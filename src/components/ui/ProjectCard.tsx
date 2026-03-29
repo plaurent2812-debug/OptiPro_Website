@@ -1,4 +1,5 @@
 import { Project } from '@/data/projects';
+import Image from 'next/image';
 
 interface Props {
   project: Project;
@@ -8,11 +9,23 @@ interface Props {
 export default function ProjectCard({ project, compact = false }: Props) {
   return (
     <div className="project-card">
-      <div className="project-card-header">
-        <h3>{project.title}</h3>
-        <p className="project-card-meta">
-          {project.client} · {project.sector}
-        </p>
+      {project.image && (
+        <div style={{ position: 'relative', width: '100%', height: compact ? '200px' : '300px', borderRadius: '12px', overflow: 'hidden', marginBottom: '1.5rem', border: '1px solid rgba(255,255,255,0.06)' }}>
+          <Image src={project.image} alt={`Aperçu de ${project.title}`} fill style={{ objectFit: 'cover', objectPosition: 'top' }} />
+        </div>
+      )}
+      <div className="project-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
+        <div>
+          <h3>{project.title}</h3>
+          <p className="project-card-meta">
+            {project.client} · {project.sector}
+          </p>
+        </div>
+        {project.url && (
+          <a href={project.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: 'var(--accent)', textDecoration: 'none', padding: '0.4rem 1rem', border: '1px solid rgba(249, 115, 22, 0.4)', borderRadius: '20px', transition: 'all 0.2s', whiteSpace: 'nowrap' }}>
+            Voir le site ↗
+          </a>
+        )}
       </div>
 
       <div className="project-card-body">
