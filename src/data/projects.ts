@@ -13,24 +13,13 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 'projet-1',
-    title: 'Projet 1',
-    client: 'Client 1',
-    sector: 'Secteur',
+    title: 'Votre premier site',
+    client: 'Nom du client',
+    sector: 'Secteur d\'activité',
     context: 'Contexte du projet à compléter.',
-    problem: 'Problème rencontré à compléter.',
-    solution: 'Solution apportée à compléter.',
-    results: ['Résultat concret 1', 'Résultat concret 2'],
-    tags: ['Site web', 'Automatisation'],
-  },
-  {
-    id: 'projet-2',
-    title: 'Projet 2',
-    client: 'Client 2',
-    sector: 'Secteur',
-    context: 'Contexte du projet à compléter.',
-    problem: 'Problème rencontré à compléter.',
-    solution: 'Solution apportée à compléter.',
-    results: ['Résultat concret 1', 'Résultat concret 2'],
-    tags: ['Web app', 'Workflow'],
-  },
+    problem: 'Problème rencontré (le besoin du client).',
+    solution: 'Solution apportée (ce que vous avez construit).',
+    results: ['Résultat concret 1 (ex: Site en ligne en 2 semaines)', 'Rendu professionnel et rapide'],
+    tags: ['Site web', 'Sur-mesure'],
+  }
 ];
