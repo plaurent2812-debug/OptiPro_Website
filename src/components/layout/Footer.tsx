@@ -32,9 +32,9 @@ export default function Footer() {
                             <Image
                                 src="/logo.png"
                                 alt="OptiPro"
-                                width={220}
-                                height={73}
-                                style={{ objectFit: 'contain', mixBlendMode: 'multiply' }}
+                                width={320}
+                                height={107}
+                                style={{ objectFit: 'contain', mixBlendMode: 'multiply', maxWidth: '100%', height: 'auto' }}
                             />
                         </div>
                         <p style={{ color: 'var(--muted)', fontSize: '0.9rem', lineHeight: 1.7, maxWidth: '260px' }}>
