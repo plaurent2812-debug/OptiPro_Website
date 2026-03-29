@@ -506,7 +506,7 @@
     width: 400px;
     height: 400px;
     margin: 1rem auto 0;
-    transform: scale(0.9);
+    transform: scale(0.95);
     transform-origin: center center;
   }
   /* On ne cache plus .orbitalLayer, .scanline ou .particle */
