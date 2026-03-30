@@ -110,6 +110,13 @@ export default function Footer() {
                         >
                             Confidentialité
                         </Link>
+                        <Link
+                            href="/admin/login"
+                            className="footer-link footer-link--muted"
+                            style={{ fontSize: '0.85rem', color: 'var(--muted)', textDecoration: 'none', marginLeft: '1rem', borderLeft: '1px solid var(--border)', paddingLeft: '1.5rem' }}
+                        >
+                            Espace Pro
+                        </Link>
                     </div>
                 </div>
             </div>
