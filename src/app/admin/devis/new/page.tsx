@@ -4,10 +4,11 @@ import { useState, useActionState, useEffect } from 'react'
 import Link from 'next/link'
 import styles from '../../clients/clients.module.css'
 import { createDevisAction } from '../actions'
-import { Client } from '@/types/admin'
 import { createClient } from '@/lib/supabase/client'
 import { formatMontant } from '@/lib/utils'
 import { useFormStatus } from 'react-dom'
+
+type ClientOption = { id: string; prenom: string | null; nom: string; entreprise: string | null }
 
 function SubmitButton() {
   const { pending } = useFormStatus()
@@ -20,7 +21,7 @@ function SubmitButton() {
 
 export default function NewDevisPage() {
   const [state, formAction] = useActionState(createDevisAction, null)
-  const [clients, setClients] = useState<Client[]>([])
+  const [clients, setClients] = useState<ClientOption[]>([])
   
   // Builder State
   const [lignes, setLignes] = useState([
@@ -32,7 +33,7 @@ export default function NewDevisPage() {
     const fetchClients = async () => {
       const supabase = createClient()
       const { data } = await supabase.from('clients').select('id, prenom, nom, entreprise').order('nom')
-      if (data) setClients(data)
+      if (data) setClients(data as ClientOption[])
     }
     fetchClients()
   }, [])

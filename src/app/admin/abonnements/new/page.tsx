@@ -8,6 +8,8 @@ import { Client } from '@/types/admin'
 import { createClient } from '@/lib/supabase/client'
 import { useFormStatus } from 'react-dom'
 
+type ClientOption = { id: string; prenom: string | null; nom: string; entreprise: string | null }
+
 function SubmitButton() {
   const { pending } = useFormStatus()
   return (
@@ -19,13 +21,13 @@ function SubmitButton() {
 
 export default function NewAbonnementPage() {
   const [state, formAction] = useActionState(createAbonnementAction, null)
-  const [clients, setClients] = useState<Client[]>([])
+  const [clients, setClients] = useState<ClientOption[]>([])
 
   useEffect(() => {
     const fetchClients = async () => {
       const supabase = createClient()
       const { data } = await supabase.from('clients').select('id, prenom, nom, entreprise').order('nom')
-      if (data) setClients(data)
+      if (data) setClients(data as ClientOption[])
     }
     fetchClients()
   }, [])
