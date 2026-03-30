@@ -44,7 +44,7 @@ export default async function ClientDetailPage(props: { params: Promise<{ id: st
         </div>
         
         <div style={{ display: 'flex', gap: '1rem' }}>
-          <button className={styles.secondaryBtn}>Modifier</button>
+          <Link href={`/admin/clients/${client.id}/edit`} className={styles.secondaryBtn}>Modifier</Link>
           <Link href={`/admin/devis/new?client_id=${client.id}`} className={styles.primaryBtn}>
             + Nouveau devis
           </Link>

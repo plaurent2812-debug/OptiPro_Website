@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import styles from '../../clients/clients.module.css'
 import { DEVIS_STATUT_LABELS, formatDate, formatMontant } from '@/lib/utils'
+import PennylaneButton from './PennylaneButton'
 
 export const dynamicConfig = 'force-dynamic'
 
@@ -52,7 +53,11 @@ export default async function DevisDetailPage(props: { params: Promise<{ id: str
         </div>
         
         <div style={{ display: 'flex', gap: '1rem' }}>
-          <button className={styles.secondaryBtn}>Modifier infos</button>
+          {devis.statut === 'brouillon' && (
+            <Link href={`/admin/devis/${devis.id}/edit`} className={styles.secondaryBtn}>
+              Modifier infos
+            </Link>
+          )}
           {devis.statut === 'brouillon' && (
             <button className={styles.primaryBtn}>
               Marquer Envoyé
@@ -109,7 +114,13 @@ export default async function DevisDetailPage(props: { params: Promise<{ id: str
           <p style={{ color: '#6B7280', fontSize: '0.95rem', maxWidth: '400px' }}>
             Ce devis est géré via le nouveau système de facturation certifiée. Les PDF sont générés directement par le logiciel partenaire.
           </p>
-          <button className={styles.primaryBtn} style={{ marginTop: '1rem', background: '#4F46E5' }}>Générer via API Partenaire</button>
+          {devis.statut === 'brouillon' ? (
+            <PennylaneButton devisId={devis.id} />
+          ) : (
+            <div style={{ marginTop: '1rem', color: '#059669', fontWeight: 500 }}>
+              ✓ Devis envoyé / synchronisé
+            </div>
+          )}
         </div>
 
       </div>

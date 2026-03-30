@@ -11,6 +11,11 @@ import { createPennylaneInvoice, PennylaneInvoicePayload } from '@/lib/pennylane
 export async function pushFactureToPennylaneAction(factureId: string) {
   const supabase = await createClient()
 
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+  if (authError || !user) {
+    return { error: 'Session expirée. Veuillez vous reconnecter.' }
+  }
+
   // 1. Récupération des données CRM
   const { data: facture, error } = await supabase
     .from('factures')

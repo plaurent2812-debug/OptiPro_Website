@@ -8,6 +8,11 @@ import { Periodicite } from '@/types/admin'
 export async function createAbonnementAction(prevState: any, formData: FormData) {
   const supabase = await createClient()
 
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+  if (authError || !user) {
+    return { error: 'Session expirée. Veuillez vous reconnecter.' }
+  }
+
   const clientId = formData.get('client_id') as string
 
   if (!clientId) {
