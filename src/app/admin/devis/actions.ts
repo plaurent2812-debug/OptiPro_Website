@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { generateDevisNumero } from '@/lib/utils'
 
-export async function createDevisAction(formData: FormData) {
+export async function createDevisAction(prevState: any, formData: FormData) {
   const supabase = await createClient()
 
   const clientId = formData.get('client_id') as string

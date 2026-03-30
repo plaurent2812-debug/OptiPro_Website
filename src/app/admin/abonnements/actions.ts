@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { Periodicite } from '@/types/admin'
 
-export async function createAbonnementAction(formData: FormData) {
+export async function createAbonnementAction(prevState: any, formData: FormData) {
   const supabase = await createClient()
 
   const clientId = formData.get('client_id') as string

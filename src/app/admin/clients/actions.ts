@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { ClientStatut } from '@/types/admin'
 
-export async function createClientAction(formData: FormData) {
+export async function createClientAction(prevState: any, formData: FormData) {
   const supabase = await createClient()
 
   const rawData = {
