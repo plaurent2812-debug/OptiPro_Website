@@ -123,7 +123,7 @@ export default async function AdminDashboardPage() {
                   devisRecents?.map((devis) => (
                     <tr key={devis.id}>
                       <td style={{ fontWeight: 600 }}>{devis.numero}</td>
-                      <td>{devis.clients?.prenom} {devis.clients?.nom}</td>
+                      <td>{(devis.clients as any)?.prenom} {(devis.clients as any)?.nom}</td>
                       <td>{formatDate(devis.date_emission)}</td>
                       <td style={{ fontWeight: 600, textAlign: 'right' }}>{formatMontant(devis.montant_ht)}</td>
                       <td style={{ textAlign: 'center' }}>
