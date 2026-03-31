@@ -6,3 +6,7 @@
 | 2026-03-28 | Le projet Supabase SAPAL est un projet client existant, pas pour OptiPro | Toujours demander avant de toucher à un projet Supabase existant |
 | 2026-03-28 | Pierre ne fait pas de marketing — il se concentre sur l'admin, les outils, l'automatisation | Ne pas proposer de features marketing (SEO, réseaux sociaux, etc.) dans les audits |
 | 2026-03-28 | Compte GitHub = plaurent2812-debug (pas pl2878dev) | Vérifier le bon compte avant de créer des PR |
+| 2026-03-31 | API Pennylane V2 quotes : `expiry_date` → `deadline`, `line_items_attributes` → `invoice_lines` | Les noms de champs V2 diffèrent de V1 — toujours consulter la doc V2 (pennylane.readme.io) |
+| 2026-03-31 | API Pennylane V2 : `unit_price_cents` (int centimes) → `raw_currency_unit_price` (string euros) | V2 attend le prix en euros sous forme de string, pas en centimes |
+| 2026-03-31 | API Pennylane V2 : `FR_0` n'existe plus pour la TVA → utiliser `exempt` | Pour franchise en base (auto-entrepreneur), le taux TVA V2 est `exempt` |
+| 2026-03-31 | API Pennylane V2 : le champ `unit` est obligatoire sur chaque ligne | Toujours inclure `unit: 'piece'` (ou autre) dans les invoice_lines |

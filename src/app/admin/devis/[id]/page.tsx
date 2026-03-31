@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import styles from '../../clients/clients.module.css'
 import { DEVIS_STATUT_LABELS, formatDate, formatMontant } from '@/lib/utils'
-import PennylaneButton from './PennylaneButton'
 import DevisActions from './DevisActions'
 
 export const dynamicConfig = 'force-dynamic'
@@ -38,7 +37,7 @@ export default async function DevisDetailPage(props: { params: Promise<{ id: str
           <Link href="/admin/devis" className={styles.actionBtn} style={{ marginBottom: '1rem' }}>
             ← Retour à la liste
           </Link>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.25rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.25rem', flexWrap: 'wrap' }}>
             <h1 className={styles.title}>Devis {devis.numero}</h1>
             <span className={`${styles.badge} ${styles[`badge--${devis.statut}`]}`}>
               {DEVIS_STATUT_LABELS[devis.statut] || devis.statut}
@@ -56,7 +55,7 @@ export default async function DevisDetailPage(props: { params: Promise<{ id: str
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
           {devis.statut === 'brouillon' && (
             <Link href={`/admin/devis/${devis.id}/edit`} className={styles.secondaryBtn}>
-              Modifier infos
+              ✏️ Modifier
             </Link>
           )}
           <DevisActions
@@ -103,19 +102,27 @@ export default async function DevisDetailPage(props: { params: Promise<{ id: str
           </ul>
         </div>
 
-        {/* Section Ex-PDF (Nouvelle Architecture Pennylane) */}
+        {/* Section Pennylane - Statut de synchronisation */}
         <div className={styles.card} style={{ gap: '1.5rem', display: 'flex', flexDirection: 'column', padding: '2rem', height: '100%', justifyContent: 'center', alignItems: 'center', textAlign: 'center', background: '#F9FAFB' }}>
-          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⚙️</div>
-          <h3 style={{ fontSize: '1.25rem', color: '#111827', margin: 0 }}>Génération Déportée</h3>
-          <p style={{ color: '#6B7280', fontSize: '0.95rem', maxWidth: '400px' }}>
-            Ce devis est géré via le nouveau système de facturation certifiée. Les PDF sont générés directement par le logiciel partenaire.
-          </p>
-          {devis.statut === 'brouillon' ? (
-            <PennylaneButton devisId={devis.id} />
+          {devis.pennylane_quote_id ? (
+            <>
+              <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>✅</div>
+              <h3 style={{ fontSize: '1.25rem', color: '#111827', margin: 0 }}>Synchronisé avec Pennylane</h3>
+              <p style={{ color: '#6B7280', fontSize: '0.9rem', maxWidth: '400px', margin: 0 }}>
+                Ce devis est lié à Pennylane (ID: {devis.pennylane_quote_id}). Utilisez le bouton &quot;↻ Sync Pennylane&quot; pour mettre à jour le statut.
+              </p>
+              <div style={{ marginTop: '0.5rem', padding: '0.5rem 1rem', background: '#D1FAE5', borderRadius: '8px', color: '#065F46', fontSize: '0.85rem', fontWeight: 600 }}>
+                Statut OptiPro : {DEVIS_STATUT_LABELS[devis.statut] || devis.statut}
+              </div>
+            </>
           ) : (
-            <div style={{ marginTop: '1rem', color: '#059669', fontWeight: 500 }}>
-              ✓ Devis envoyé / synchronisé
-            </div>
+            <>
+              <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>⚙️</div>
+              <h3 style={{ fontSize: '1.25rem', color: '#111827', margin: 0 }}>Non synchronisé</h3>
+              <p style={{ color: '#6B7280', fontSize: '0.9rem', maxWidth: '400px', margin: 0 }}>
+                Ce devis n&apos;a pas encore été envoyé vers Pennylane. Cliquez sur &quot;🚀 Envoyer vers Pennylane&quot; pour le créer dans votre logiciel de facturation.
+              </p>
+            </>
           )}
         </div>
 
