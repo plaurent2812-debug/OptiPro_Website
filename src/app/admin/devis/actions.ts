@@ -318,7 +318,7 @@ export async function syncDevisFromPennylaneAction(devisId: string) {
 
   const { data: devis, error } = await supabase
     .from('devis')
-    .select('pennylane_quote_id, statut, client_id, clients(pennylane_customer_id)')
+    .select('pennylane_quote_id, statut, client_id')
     .eq('id', devisId)
     .single()
 
@@ -346,10 +346,11 @@ export async function syncDevisFromPennylaneAction(devisId: string) {
     }
 
     // --- 2. Sync des infos client depuis Pennylane ---
-    const pennylaneCustomerId = (devis.clients as any)?.pennylane_customer_id
+    // On récupère le customer_id directement depuis le devis Pennylane
+    const pennylaneCustomerId = pennylaneQuote.customer_id || pennylaneQuote.customer?.id
     if (pennylaneCustomerId) {
       try {
-        const plClient = await getPennylaneCustomer(pennylaneCustomerId)
+        const plClient = await getPennylaneCustomer(String(pennylaneCustomerId))
         
         // Extraction des données client depuis la réponse Pennylane
         const clientUpdate: Record<string, any> = {}
@@ -400,6 +401,8 @@ export async function syncDevisFromPennylaneAction(devisId: string) {
         // On ne bloque pas la sync du devis si le client échoue
         updates.push(`⚠️ Client non synchronisé: ${clientErr.message}`)
       }
+    } else {
+      updates.push('⚠️ Pas de customer_id trouvé dans le devis Pennylane')
     }
 
     if (updates.length === 0) {
