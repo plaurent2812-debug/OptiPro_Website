@@ -50,7 +50,7 @@ export default function DevisActions({ devisId, statut, hasPennylaneId }: DevisA
     })
   }
 
-  const canPush = statut === 'brouillon'
+  const canPush = !hasPennylaneId
   const canSync = hasPennylaneId
   const canArchive = statut !== 'archive'
 

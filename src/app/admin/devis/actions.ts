@@ -272,14 +272,19 @@ export async function pushDevisToPennylaneAction(devisId: string) {
   try {
     const quoteRes = await createPennylaneQuote(quotePayload);
     
-    // Si succès, on passe le devis en "envoye" et on stocke l'ID Pennylane
+    // Si succès, on stocke l'ID Pennylane et on passe en "envoye" si c'était un brouillon
+    const updateData: Record<string, any> = { pennylane_quote_id: String(quoteRes.id) }
+    if (devis.statut === 'brouillon') {
+      updateData.statut = 'envoye'
+    }
     await supabase
       .from('devis')
-      .update({ statut: 'envoye', pennylane_quote_id: String(quoteRes.id) })
+      .update(updateData)
       .eq('id', devisId)
 
     revalidatePath(`/admin/devis/${devisId}`)
-    return { success: true, message: "Devis généré sur Pennylane avec succès !" }
+    revalidatePath('/admin/devis')
+    return { success: true, message: "Devis synchronisé avec Pennylane ! ✅" }
 
   } catch (err: any) {
     return { error: err.message || "Erreur lors de la création du devis sur Pennylane." }
