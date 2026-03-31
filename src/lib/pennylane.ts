@@ -99,12 +99,10 @@ export async function createPennylaneCustomer(payload: PennylaneCustomerPayload)
 }
 
 export interface PennylaneQuotePayload {
-  quote: {
-    customer_id: string;
-    date: string;
-    validity_days?: number;
-    line_items: PennylaneInvoiceItem[];
-  }
+  customer_id: string;
+  date: string;
+  validity_days?: number;
+  line_items: PennylaneInvoiceItem[];
 }
 
 export async function createPennylaneQuote(payload: PennylaneQuotePayload) {

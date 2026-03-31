@@ -259,17 +259,15 @@ export async function pushDevisToPennylaneAction(devisId: string) {
 
   // ÉTAPE 2 : Créer le vrai devis
   const quotePayload: PennylaneQuotePayload = {
-    quote: {
-      customer_id: pennylaneCustomerId,
-      date: devis.date_emission,
-      validity_days: validityDays,
-      line_items: devis.devis_lignes.map((l: any) => ({
-        label: l.description,
-        quantity: l.quantite,
-        unit_price_cents: Math.round(l.prix_unitaire_ht * 100), // En centimes !
-        vat_rate: 'FR_0' // Exonération auto-entrepreneur
-      }))
-    }
+    customer_id: pennylaneCustomerId,
+    date: devis.date_emission,
+    validity_days: validityDays,
+    line_items: devis.devis_lignes.map((l: any) => ({
+      label: l.description,
+      quantity: l.quantite,
+      unit_price_cents: Math.round(l.prix_unitaire_ht * 100), // En centimes !
+      vat_rate: 'FR_0' // Exonération auto-entrepreneur
+    }))
   };
 
   try {
