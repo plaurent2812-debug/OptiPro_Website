@@ -248,10 +248,9 @@ export async function pushDevisToPennylaneAction(devisId: string) {
   let pennylaneCustomerId: string;
   try {
     const customerRes = await createPennylaneCustomer(customerPayload);
-    // Pennylane V2 returns 'company_customer' or 'individual_customer'
-    const wrapper = isCompany ? customerRes?.company_customer : customerRes?.individual_customer;
-    pennylaneCustomerId = wrapper?.source_id;
-    if (!pennylaneCustomerId) {
+    // Pennylane V2 returns the customer object directly at root level with `id`
+    pennylaneCustomerId = String(customerRes?.id);
+    if (!pennylaneCustomerId || pennylaneCustomerId === 'undefined') {
       throw new Error(`Erreur de lecture de l'ID client depuis la réponse V2: ${JSON.stringify(customerRes)}`);
     }
   } catch (err: any) {
