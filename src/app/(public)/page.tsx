@@ -165,7 +165,7 @@ export default function HomePage() {
                 <li>Cartographie complète de vos outils</li>
                 <li>Identification des points de friction</li>
                 <li>Rapport détaillé avec plan d&apos;action</li>
-                <li>Remboursé si contrat signé</li>
+                <li>L'audit est gratuit</li>
               </ul>
             </div>
             <div className="service-showcase-visual">

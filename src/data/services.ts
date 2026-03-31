@@ -22,7 +22,7 @@ export const services: ServiceStep[] = [
       'Identification des points de friction',
       'Rapport détaillé avec recommandations priorisées',
     ],
-    note: 'Remboursé si contrat signé',
+    note: 'L\'audit est gratuit',
   },
   {
     id: 'analyse',
