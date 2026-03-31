@@ -221,14 +221,8 @@ export async function pushDevisToPennylaneAction(devisId: string) {
     return { error: "Devis introuvable." }
   }
 
-  // Calculate validity_days if date_validite is present
-  let validityDays = 30; // default
-  if (devis.date_validite) {
-    const issue = new Date(devis.date_emission);
-    const validity = new Date(devis.date_validite);
-    const diffTime = Math.abs(validity.getTime() - issue.getTime());
-    validityDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  }
+  // Calculate expiry_date
+  const expiryDate = devis.date_validite || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
 
   // ÉTAPE 1 : Créer ou récupérer le client sur Pennylane
   const isCompany = !!devis.clients.entreprise;
@@ -248,7 +242,6 @@ export async function pushDevisToPennylaneAction(devisId: string) {
   let pennylaneCustomerId: string;
   try {
     const customerRes = await createPennylaneCustomer(customerPayload);
-    // Pennylane V2 returns the customer object directly at root level with `id`
     pennylaneCustomerId = String(customerRes?.id);
     if (!pennylaneCustomerId || pennylaneCustomerId === 'undefined') {
       throw new Error(`Erreur de lecture de l'ID client depuis la réponse V2: ${JSON.stringify(customerRes)}`);
@@ -261,8 +254,8 @@ export async function pushDevisToPennylaneAction(devisId: string) {
   const quotePayload: PennylaneQuotePayload = {
     customer_id: pennylaneCustomerId,
     date: devis.date_emission,
-    validity_days: validityDays,
-    line_items: devis.devis_lignes.map((l: any) => ({
+    expiry_date: expiryDate,
+    line_items_attributes: devis.devis_lignes.map((l: any) => ({
       label: l.description,
       quantity: l.quantite,
       unit_price_cents: Math.round(l.prix_unitaire_ht * 100), // En centimes !

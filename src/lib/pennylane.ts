@@ -98,11 +98,18 @@ export async function createPennylaneCustomer(payload: PennylaneCustomerPayload)
   return await response.json();
 }
 
+export interface PennylaneQuoteLineItem {
+  label: string;
+  quantity: number;
+  unit_price_cents: number;
+  vat_rate: string;
+}
+
 export interface PennylaneQuotePayload {
   customer_id: string;
   date: string;
-  validity_days?: number;
-  line_items: PennylaneInvoiceItem[];
+  expiry_date?: string;
+  line_items_attributes: PennylaneQuoteLineItem[];
 }
 
 export async function createPennylaneQuote(payload: PennylaneQuotePayload) {
