@@ -4,6 +4,7 @@ import Link from 'next/link'
 import styles from '../../clients/clients.module.css'
 import { DEVIS_STATUT_LABELS, formatDate, formatMontant } from '@/lib/utils'
 import PennylaneButton from './PennylaneButton'
+import DevisActions from './DevisActions'
 
 export const dynamicConfig = 'force-dynamic'
 
@@ -52,22 +53,17 @@ export default async function DevisDetailPage(props: { params: Promise<{ id: str
           )}
         </div>
         
-        <div style={{ display: 'flex', gap: '1rem' }}>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
           {devis.statut === 'brouillon' && (
             <Link href={`/admin/devis/${devis.id}/edit`} className={styles.secondaryBtn}>
               Modifier infos
             </Link>
           )}
-          {devis.statut === 'brouillon' && (
-            <button className={styles.primaryBtn}>
-              Marquer Envoyé
-            </button>
-          )}
-          {devis.statut === 'envoye' && (
-            <button className={styles.primaryBtn} style={{ backgroundColor: '#059669' }}>
-              ✓ Accepter le devis
-            </button>
-          )}
+          <DevisActions
+            devisId={devis.id}
+            statut={devis.statut}
+            hasPennylaneId={!!devis.pennylane_quote_id}
+          />
         </div>
       </div>
 

@@ -34,11 +34,12 @@ CREATE TABLE devis (
   numero          TEXT UNIQUE NOT NULL,
   client_id       UUID REFERENCES clients(id) ON DELETE SET NULL,
   statut          TEXT DEFAULT 'brouillon'
-                  CHECK (statut IN ('brouillon', 'envoye', 'accepte', 'refuse', 'expire')),
+                  CHECK (statut IN ('brouillon', 'envoye', 'accepte', 'refuse', 'expire', 'archive')),
   date_emission   DATE DEFAULT CURRENT_DATE,
   date_validite   DATE,
   montant_ht      NUMERIC(10,2) DEFAULT 0,
-  notes           TEXT
+  notes           TEXT,
+  pennylane_quote_id TEXT
 );
 
 -- ── Table devis_lignes ─────────────────────────────────────

@@ -151,6 +151,36 @@
   color: #4B5563;
 }
 
+.badge--brouillon {
+  background-color: #F3F4F6;
+  color: #4B5563;
+}
+
+.badge--envoye {
+  background-color: #DBEAFE;
+  color: #1E40AF;
+}
+
+.badge--accepte {
+  background-color: #D1FAE5;
+  color: #065F46;
+}
+
+.badge--refuse {
+  background-color: #FEE2E2;
+  color: #991B1B;
+}
+
+.badge--expire {
+  background-color: #FEF3C7;
+  color: #92400E;
+}
+
+.badge--archive {
+  background-color: #E5E7EB;
+  color: #6B7280;
+}
+
 .actionsBox {
   text-align: right;
 }

@@ -58,6 +58,7 @@ export const DEVIS_STATUT_LABELS: Record<string, string> = {
   accepte: 'Accepté',
   refuse: 'Refusé',
   expire: 'Expiré',
+  archive: 'Archivé',
 }
 
 export const FACTURE_STATUT_LABELS: Record<string, string> = {

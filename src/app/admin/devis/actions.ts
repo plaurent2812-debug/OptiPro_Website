@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { generateDevisNumero } from '@/lib/utils'
-import { createPennylaneCustomer, PennylaneCustomerPayload, createPennylaneQuote, PennylaneQuotePayload } from '@/lib/pennylane'
+import { createPennylaneCustomer, PennylaneCustomerPayload, createPennylaneQuote, PennylaneQuotePayload, getPennylaneQuote, mapPennylaneStatus } from '@/lib/pennylane'
 
 export async function createDevisAction(prevState: any, formData: FormData) {
   const supabase = await createClient()
@@ -267,10 +267,10 @@ export async function pushDevisToPennylaneAction(devisId: string) {
   try {
     const quoteRes = await createPennylaneQuote(quotePayload);
     
-    // Si succès, on passe le devis en "envoye"
+    // Si succès, on passe le devis en "envoye" et on stocke l'ID Pennylane
     await supabase
       .from('devis')
-      .update({ statut: 'envoye' }) 
+      .update({ statut: 'envoye', pennylane_quote_id: String(quoteRes.id) })
       .eq('id', devisId)
 
     revalidatePath(`/admin/devis/${devisId}`)
@@ -278,5 +278,74 @@ export async function pushDevisToPennylaneAction(devisId: string) {
 
   } catch (err: any) {
     return { error: err.message || "Erreur lors de la création du devis sur Pennylane." }
+  }
+}
+
+export async function archiveDevisAction(devisId: string) {
+  const supabase = await createClient()
+
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+  if (authError || !user) {
+    return { error: 'Session expirée. Veuillez vous reconnecter.' }
+  }
+
+  const { error } = await supabase
+    .from('devis')
+    .update({ statut: 'archive' })
+    .eq('id', devisId)
+
+  if (error) {
+    return { error: "Erreur lors de l'archivage du devis." }
+  }
+
+  revalidatePath(`/admin/devis/${devisId}`)
+  revalidatePath('/admin/devis')
+  return { success: true, message: "Devis archivé." }
+}
+
+export async function syncDevisFromPennylaneAction(devisId: string) {
+  const supabase = await createClient()
+
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+  if (authError || !user) {
+    return { error: 'Session expirée. Veuillez vous reconnecter.' }
+  }
+
+  const { data: devis, error } = await supabase
+    .from('devis')
+    .select('pennylane_quote_id, statut')
+    .eq('id', devisId)
+    .single()
+
+  if (error || !devis) {
+    return { error: "Devis introuvable." }
+  }
+
+  if (!devis.pennylane_quote_id) {
+    return { error: "Ce devis n'a pas encore été envoyé sur Pennylane." }
+  }
+
+  try {
+    const pennylaneQuote = await getPennylaneQuote(devis.pennylane_quote_id)
+    const newStatus = mapPennylaneStatus(pennylaneQuote.status)
+
+    if (!newStatus) {
+      return { error: `Statut Pennylane inconnu : "${pennylaneQuote.status}"` }
+    }
+
+    if (newStatus === devis.statut) {
+      return { success: true, message: `Déjà à jour (${devis.statut}).` }
+    }
+
+    await supabase
+      .from('devis')
+      .update({ statut: newStatus })
+      .eq('id', devisId)
+
+    revalidatePath(`/admin/devis/${devisId}`)
+    revalidatePath('/admin/devis')
+    return { success: true, message: `Statut mis à jour : ${newStatus}` }
+  } catch (err: any) {
+    return { error: err.message || "Erreur lors de la synchronisation avec Pennylane." }
   }
 }
