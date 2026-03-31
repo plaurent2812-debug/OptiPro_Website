@@ -65,7 +65,7 @@ export default function ConfidentialitePage() {
           </p>
           <p style={paragraphStyle}>
             <strong>Pierre Laurent</strong> — OptiPro<br />
-            Email : <a href="mailto:contact@optipro.fr" style={linkStyle}>contact@optipro.fr</a>
+            Email : <a href="mailto:p.laurent@opti-pro.fr" style={linkStyle}>p.laurent@opti-pro.fr</a>
           </p>
 
           {/* 2. Données collectées */}
@@ -145,7 +145,7 @@ export default function ConfidentialitePage() {
             <li><strong>Droit à la limitation</strong> — demander la restriction du traitement</li>
           </ul>
           <p style={paragraphStyle}>
-            Pour exercer l&apos;un de ces droits, adressez votre demande par e-mail à : <a href="mailto:contact@optipro.fr" style={linkStyle}>contact@optipro.fr</a>. Une réponse vous sera apportée dans un délai maximum de 30 jours.
+            Pour exercer l&apos;un de ces droits, adressez votre demande par e-mail à : <a href="mailto:p.laurent@opti-pro.fr" style={linkStyle}>p.laurent@opti-pro.fr</a>. Une réponse vous sera apportée dans un délai maximum de 30 jours.
           </p>
           <p style={paragraphStyle}>
             Si vous estimez que le traitement de vos données n&apos;est pas conforme à la réglementation, vous pouvez introduire une réclamation auprès de la <strong>CNIL</strong> (Commission nationale de l&apos;informatique et des libertés) : <a href="https://www.cnil.fr" style={linkStyle} target="_blank" rel="noopener noreferrer">cnil.fr</a>.

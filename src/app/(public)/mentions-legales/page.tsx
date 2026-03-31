@@ -66,7 +66,7 @@ export default function MentionsLegalesPage() {
             Code APE : 70.22Z — Conseil pour les affaires et autres conseils de gestion<br />
             TVA : Non assujetti (franchise en base de TVA, article 293 B du CGI)<br />
             Directeur de la publication : Pierre Laurent<br />
-            Email : <a href="mailto:contact@optipro.fr" style={linkStyle}>contact@optipro.fr</a><br />
+            Email : <a href="mailto:p.laurent@opti-pro.fr" style={linkStyle}>p.laurent@opti-pro.fr</a><br />
             Site web : <a href="https://optipro.fr" style={linkStyle}>optipro.fr</a>
           </p>
 
@@ -104,7 +104,7 @@ export default function MentionsLegalesPage() {
             Ces données sont traitées dans le seul but de répondre aux demandes de contact. Elles sont transmises via l&apos;API Resend pour l&apos;envoi d&apos;e-mails et ne sont pas conservées dans une base de données tierce.
           </p>
           <p style={paragraphStyle}>
-            Conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés, vous disposez d&apos;un droit d&apos;accès, de rectification et de suppression de vos données. Pour exercer ce droit, contactez : <a href="mailto:contact@optipro.fr" style={linkStyle}>contact@optipro.fr</a>.
+            Conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés, vous disposez d&apos;un droit d&apos;accès, de rectification et de suppression de vos données. Pour exercer ce droit, contactez : <a href="mailto:p.laurent@opti-pro.fr" style={linkStyle}>p.laurent@opti-pro.fr</a>.
           </p>
           <p style={paragraphStyle}>
             Pour en savoir plus, consultez la <a href="/confidentialite" style={linkStyle}>politique de confidentialité</a>.

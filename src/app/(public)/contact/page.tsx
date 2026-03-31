@@ -153,7 +153,7 @@ export default function ContactPage() {
                 <div style={{ marginTop: '3rem', textAlign: 'center', color: 'var(--muted)' }}>
                     <p style={{ fontSize: '0.95rem' }}>Ou contactez Pierre directement :</p>
                     <p style={{ marginTop: '0.5rem', fontWeight: 700, color: '#fb923c' }}>
-                        <a href="mailto:contact@optipro.fr" style={{ color: '#fb923c' }}>contact@optipro.fr</a>
+                        <a href="mailto:p.laurent@opti-pro.fr" style={{ color: '#fb923c' }}>p.laurent@opti-pro.fr</a>
                     </p>
                     <p style={{ marginTop: '0.25rem', fontSize: '0.875rem' }}>
                         Réponse garantie sous 24h ·{' '}

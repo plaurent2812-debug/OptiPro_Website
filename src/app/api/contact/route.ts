@@ -2,11 +2,22 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
 export async function POST(request: Request) {
-    if (!process.env.RESEND_API_KEY) {
-        console.error("RESEND_API_KEY is not defined");
-        return NextResponse.json({ error: "Configuration serveur manquante" }, { status: 500 });
+    const apiKey = process.env.RESEND_API_KEY;
+    const isConfigured = apiKey && apiKey !== 're_...' && apiKey.length > 5;
+
+    if (!isConfigured) {
+        if (process.env.NODE_ENV === 'development') {
+            console.log("⚠️ DEV MODE : Envoi d'email simulé car RESEND_API_KEY n'est pas définie.");
+            const body = await request.json();
+            console.log("Nouveau contact reçu silencieusement :", body);
+            return NextResponse.json({ success: true, simulated: true });
+        }
+        
+        console.error("RESEND_API_KEY is not defined or is just a placeholder.");
+        return NextResponse.json({ error: "Configuration serveur manquante (Resend API)" }, { status: 500 });
     }
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    
+    const resend = new Resend(apiKey);
     try {
         const body = await request.json();
         const { name, company, email, phone, activity, message } = body;
@@ -20,8 +31,8 @@ export async function POST(request: Request) {
         }
 
         const { data, error } = await resend.emails.send({
-            from: 'OptiPro Contact <onboarding@resend.dev>', // Par défaut avec l'essai Resend.
-            to: ['p.laurent2812@gmail.com'], // Adresse de réception (temporaire, le temps de vérifier le domaine cible sur Resend)
+            from: 'Contact OptiPro <p.laurent@opti-pro.fr>', // Envoi depuis le nom de domaine vérifié
+            to: ['p.laurent@opti-pro.fr'], // Adresse de réception principale
             replyTo: email,
             subject: `Nouveau contact OptiPro — ${name}`,
             html: `

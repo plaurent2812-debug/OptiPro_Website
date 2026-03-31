@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
+import Logo from '../ui/Logo';
 
 
 export default function Footer() {
@@ -29,13 +29,7 @@ export default function Footer() {
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '3rem', marginBottom: '3rem' }}>
                     <div>
                         <div style={{ marginBottom: '1.25rem' }}>
-                            <Image
-                                src="/logo.png"
-                                alt="OptiPro"
-                                width={160}
-                                height={54}
-                                style={{ objectFit: 'contain', mixBlendMode: 'multiply', maxWidth: '100%', height: 'auto' }}
-                            />
+                            <Logo size="2.5rem" />
                         </div>
                         <p style={{ color: 'var(--muted)', fontSize: '0.9rem', lineHeight: 1.7, maxWidth: '260px' }}>
                             Conseil &amp; développement sur mesure pour artisans, TPE et indépendants.
@@ -69,11 +63,11 @@ export default function Footer() {
                             <li>Pierre Laurent — Fondateur</li>
                             <li>
                                 <a
-                                    href="mailto:contact@optipro.fr"
+                                    href="mailto:p.laurent@opti-pro.fr"
                                     className="footer-link"
                                     style={{ color: 'var(--secondary)' }}
                                 >
-                                    contact@optipro.fr
+                                    p.laurent@opti-pro.fr
                                 </a>
                             </li>
                             <li>
