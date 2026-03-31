@@ -10,6 +10,7 @@
   flex-direction: column;
   overflow-y: auto;
   height: 100vh;
+  min-width: 0; /* Ensures it can shrink properly */
 }
 
 .contentContainer {
@@ -27,4 +28,19 @@
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .adminLayout {
+    flex-direction: column;
+  }
+  
+  .mainContent {
+    height: auto;
+    overflow-y: visible;
+  }
+  
+  .contentContainer {
+    padding: 1rem;
+  }
 }
