@@ -59,10 +59,10 @@ export async function pushFactureToPennylaneAction(factureId: string) {
   try {
     const pennylaneRes = await createPennylaneInvoice(payload)
     
-    // 4. Si succès, on met à jour la base de données (ex: statut envoyé)
+    // 4. Si succès, on met à jour la base de données
     await supabase
       .from('factures')
-      .update({ statut: 'envoyee' }) // Ou un statut spécifique "pennylane_draft"
+      .update({ statut: 'envoyee', pennylane_invoice_id: String(pennylaneRes.id) })
       .eq('id', factureId)
 
     revalidatePath(`/admin/factures/${factureId}`)

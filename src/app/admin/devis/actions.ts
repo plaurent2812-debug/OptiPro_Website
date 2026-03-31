@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { generateDevisNumero } from '@/lib/utils'
-import { createPennylaneCustomer, PennylaneCustomerPayload, createPennylaneQuote, PennylaneQuotePayload, getPennylaneQuote, mapPennylaneStatus } from '@/lib/pennylane'
+import { createPennylaneCustomer, PennylaneCustomerPayload, createPennylaneQuote, PennylaneQuotePayload, getPennylaneQuote, mapPennylaneQuoteStatus } from '@/lib/pennylane'
 
 export async function createDevisAction(prevState: any, formData: FormData) {
   const supabase = await createClient()
@@ -246,6 +246,11 @@ export async function pushDevisToPennylaneAction(devisId: string) {
     if (!pennylaneCustomerId || pennylaneCustomerId === 'undefined') {
       throw new Error(`Erreur de lecture de l'ID client depuis la réponse V2: ${JSON.stringify(customerRes)}`);
     }
+    // Stocker l'ID client Pennylane
+    await supabase
+      .from('clients')
+      .update({ pennylane_customer_id: pennylaneCustomerId })
+      .eq('id', devis.clients.id)
   } catch (err: any) {
     return { error: err.message || "Erreur lors de la création du client sur Pennylane." };
   }
@@ -327,7 +332,7 @@ export async function syncDevisFromPennylaneAction(devisId: string) {
 
   try {
     const pennylaneQuote = await getPennylaneQuote(devis.pennylane_quote_id)
-    const newStatus = mapPennylaneStatus(pennylaneQuote.status)
+    const newStatus = mapPennylaneQuoteStatus(pennylaneQuote.status)
 
     if (!newStatus) {
       return { error: `Statut Pennylane inconnu : "${pennylaneQuote.status}"` }

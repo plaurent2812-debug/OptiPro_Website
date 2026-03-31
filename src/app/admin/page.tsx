@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import styles from './clients/clients.module.css'
 import { formatMontant, formatDate } from '@/lib/utils'
+import PennylaneSyncButton from './PennylaneSyncButton'
 
 export const dynamic = 'force-dynamic'
 
@@ -57,6 +58,7 @@ export default async function AdminDashboardPage() {
           <h1 className={styles.title}>Vue d'ensemble</h1>
           <p className={styles.subtitle}>Bienvenue dans votre CRM OptiPro. Voici vos statistiques actuelles.</p>
         </div>
+        <PennylaneSyncButton />
       </div>
 
       {/* KPIs Grid */}

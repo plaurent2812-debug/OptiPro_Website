@@ -23,7 +23,8 @@ CREATE TABLE clients (
   siret           TEXT,
   notes           TEXT,
   statut          TEXT DEFAULT 'prospect'
-                  CHECK (statut IN ('prospect', 'client_actif', 'client_inactif'))
+                  CHECK (statut IN ('prospect', 'client_actif', 'client_inactif')),
+  pennylane_customer_id TEXT
 );
 
 -- ── Table devis ────────────────────────────────────────────
@@ -90,7 +91,8 @@ CREATE TABLE factures (
   date_echeance   DATE,
   montant_ht      NUMERIC(10,2) DEFAULT 0,
   notes           TEXT,
-  date_paiement   DATE
+  date_paiement   DATE,
+  pennylane_invoice_id TEXT
 );
 
 -- ── Table factures_lignes ──────────────────────────────────

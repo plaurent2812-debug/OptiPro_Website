@@ -137,14 +137,24 @@ export async function createPennylaneQuote(payload: PennylaneQuotePayload) {
   return await response.json();
 }
 
-// Mapping statuts Pennylane V2 → OptiPro
-const PENNYLANE_STATUS_MAP: Record<string, string> = {
+// Mapping statuts Pennylane V2 → OptiPro (devis)
+const PENNYLANE_QUOTE_STATUS_MAP: Record<string, string> = {
   draft: 'brouillon',
   pending: 'envoye',
   accepted: 'accepte',
   denied: 'refuse',
   archived: 'archive',
   invoiced: 'accepte',
+};
+
+// Mapping statuts Pennylane V2 → OptiPro (factures)
+const PENNYLANE_INVOICE_STATUS_MAP: Record<string, string> = {
+  draft: 'brouillon',
+  pending: 'envoyee',
+  paid: 'payee',
+  overdue: 'en_retard',
+  cancelled: 'annulee',
+  archived: 'annulee',
 };
 
 export async function getPennylaneQuote(quoteId: string) {
@@ -166,6 +176,29 @@ export async function getPennylaneQuote(quoteId: string) {
   return await response.json();
 }
 
-export function mapPennylaneStatus(pennylaneStatus: string): string | null {
-  return PENNYLANE_STATUS_MAP[pennylaneStatus] || null;
+export function mapPennylaneQuoteStatus(pennylaneStatus: string): string | null {
+  return PENNYLANE_QUOTE_STATUS_MAP[pennylaneStatus] || null;
+}
+
+export async function getPennylaneInvoice(invoiceId: string) {
+  const token = process.env.PENNYLANE_API_TOKEN;
+  if (!token) throw new Error("Clé API Pennylane manquante.");
+
+  const response = await fetch(`https://app.pennylane.com/api/external/v2/customer_invoices/${invoiceId}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/json'
+    }
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(`Erreur API Facture (${response.status}): ${JSON.stringify(errorData)}`);
+  }
+
+  return await response.json();
+}
+
+export function mapPennylaneInvoiceStatus(pennylaneStatus: string): string | null {
+  return PENNYLANE_INVOICE_STATUS_MAP[pennylaneStatus] || null;
 }
