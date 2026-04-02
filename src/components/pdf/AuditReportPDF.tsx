@@ -7,12 +7,15 @@ import type { AuditPilierKey } from '@/data/audit-grid'
 Font.register({
   family: 'Inter',
   fonts: [
-    { src: 'https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_fjbvMwCp50KnMa0ZL7SUc.ttf', fontWeight: 400 },
-    { src: 'https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_fjbvMwCp50KnMa25L7SUc.ttf', fontWeight: 600 },
-    { src: 'https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_fjbvMwCp50KnMa2JL7SUc.ttf', fontWeight: 700 },
-    { src: 'https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_fjbvMwCp50KnMa05L7SUc.ttf', fontWeight: 800 },
+    { src: 'https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf', fontWeight: 400 },
+    { src: 'https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf', fontWeight: 600 },
+    { src: 'https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf', fontWeight: 700 },
+    { src: 'https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuDyYMZg.ttf', fontWeight: 800 },
   ],
 })
+
+// Disable hyphenation (can cause crashes with some text)
+Font.registerHyphenationCallback(word => [word])
 
 const s = StyleSheet.create({
   page: { padding: 40, fontFamily: 'Inter', fontSize: 10, color: '#1F2937' },
@@ -43,6 +46,9 @@ const s = StyleSheet.create({
   pilierTrack: { flex: 1, height: 8, backgroundColor: '#F3F4F6', borderRadius: 4, overflow: 'hidden' },
   pilierFill: { height: 8, borderRadius: 4 },
   pilierScore: { width: 45, textAlign: 'right', fontSize: 9, fontWeight: 700 },
+  // Pilier icon circle
+  pilierIcon: { width: 14, height: 14, borderRadius: 7, marginRight: 6, justifyContent: 'center', alignItems: 'center' },
+  pilierIconText: { fontSize: 6, fontWeight: 800, color: 'white' },
   // Friction
   frictionRow: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 6, paddingBottom: 6, borderBottomWidth: 0.5, borderBottomColor: '#F3F4F6' },
   frictionDot: { width: 8, height: 8, borderRadius: 4, marginTop: 2, marginRight: 8 },
@@ -78,18 +84,19 @@ const PILIER_COLORS: Record<AuditPilierKey, string> = {
   automatisation: '#F97316',
 }
 
-const PILIER_DISPLAY: Record<AuditPilierKey, string> = {
-  outils: '🔧 Outils & Logiciels',
-  process: '⚙️ Process & Organisation',
-  communication: '📞 Communication & Relances',
-  admin: '📋 Gestion Administrative',
-  digital: '🌐 Présence Digitale',
-  automatisation: '⚡ Automatisation',
+// NOTE: No emojis! @react-pdf/renderer cannot render emoji glyphs
+const PILIER_DISPLAY: Record<AuditPilierKey, { label: string; abbr: string }> = {
+  outils: { label: 'Outils & Logiciels', abbr: 'OL' },
+  process: { label: 'Process & Organisation', abbr: 'PO' },
+  communication: { label: 'Communication & Relances', abbr: 'CR' },
+  admin: { label: 'Gestion Administrative', abbr: 'GA' },
+  digital: { label: 'Presence Digitale', abbr: 'PD' },
+  automatisation: { label: 'Automatisation', abbr: 'AU' },
 }
 
 const SCORE_LEVELS = [
   { min: 0, max: 2.9, label: 'Critique', color: '#EF4444' },
-  { min: 3, max: 4.9, label: 'Préoccupant', color: '#F59E0B' },
+  { min: 3, max: 4.9, label: 'Preoccupant', color: '#F59E0B' },
   { min: 5, max: 6.9, label: 'Moyen', color: '#EAB308' },
   { min: 7, max: 8.4, label: 'Bon', color: '#22C55E' },
   { min: 8.5, max: 10, label: 'Excellent', color: '#3B82F6' },
@@ -97,6 +104,11 @@ const SCORE_LEVELS = [
 
 function getLevel(score: number) {
   return SCORE_LEVELS.find(l => score >= l.min && score <= l.max) || SCORE_LEVELS[0]
+}
+
+// Helper: format number with space thousands separator (avoids locale issues)
+function formatNumber(n: number): string {
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 }
 
 interface AuditReportPDFProps {
@@ -129,10 +141,10 @@ export default function AuditReportPDF({ audit, client, frictions, actions, pili
         <View style={s.header}>
           <View>
             <Text style={s.logo}>OptiPro</Text>
-            <Text style={s.logoSub}>Audit · Développement · Automatisation</Text>
+            <Text style={s.logoSub}>Audit - Developpement - Automatisation</Text>
           </View>
           <View style={s.headerRight}>
-            <Text style={s.headerLabel}>Rapport d&apos;audit</Text>
+            <Text style={s.headerLabel}>Rapport d'audit</Text>
             <Text style={s.headerValue}>{dateStr}</Text>
           </View>
         </View>
@@ -140,9 +152,9 @@ export default function AuditReportPDF({ audit, client, frictions, actions, pili
         {/* Title */}
         <Text style={s.title}>{clientName}</Text>
         <Text style={s.subtitle}>
-          {audit.secteur && `${audit.secteur} · `}
-          {audit.effectif && `${audit.effectif} pers. · `}
-          Audit réalisé par Pierre Laurent
+          {audit.secteur && `${audit.secteur} - `}
+          {audit.effectif && `${audit.effectif} pers. - `}
+          Audit realise par Pierre Laurent
         </Text>
 
         {/* Score global */}
@@ -154,20 +166,24 @@ export default function AuditReportPDF({ audit, client, frictions, actions, pili
           <View style={s.scoreInfo}>
             <Text style={[s.scoreLabel, { color: level.color }]}>Niveau : {level.label}</Text>
             <Text style={s.scoreDesc}>
-              Ce score reflète l'efficacité opérationnelle globale de votre entreprise, évaluée sur 6 piliers pondérés : outils, process, communication, gestion, présence digitale et automatisation.
+              {"Ce score reflete l'efficacite operationnelle globale de votre entreprise, evaluee sur 6 piliers ponderes : outils, process, communication, gestion, presence digitale et automatisation."}
             </Text>
           </View>
         </View>
 
         {/* Scores par pilier */}
         <View style={s.section}>
-          <Text style={s.sectionTitle}>Détail par pilier</Text>
+          <Text style={s.sectionTitle}>Detail par pilier</Text>
           {(Object.keys(PILIER_DISPLAY) as AuditPilierKey[]).map(key => {
             const score = pilierScores[key] || 0
             const color = PILIER_COLORS[key]
+            const pilier = PILIER_DISPLAY[key]
             return (
               <View key={key} style={s.pilierRow}>
-                <Text style={s.pilierLabel}>{PILIER_DISPLAY[key]}</Text>
+                <View style={[s.pilierIcon, { backgroundColor: color }]}>
+                  <Text style={s.pilierIconText}>{pilier.abbr}</Text>
+                </View>
+                <Text style={s.pilierLabel}>{pilier.label}</Text>
                 <View style={s.pilierTrack}>
                   <View style={[s.pilierFill, { width: `${score * 10}%`, backgroundColor: color }]} />
                 </View>
@@ -184,14 +200,14 @@ export default function AuditReportPDF({ audit, client, frictions, actions, pili
             <View style={s.gainsRow}>
               <View style={s.gainBox}>
                 <Text style={s.gainValue}>{heuresSemaine}h</Text>
-                <Text style={s.gainLabel}>récupérables / semaine</Text>
+                <Text style={s.gainLabel}>recuperables / semaine</Text>
               </View>
               <View style={s.gainBox}>
                 <Text style={s.gainValue}>{Math.round(heuresAn)}h</Text>
                 <Text style={s.gainLabel}>soit ~{Math.round(heuresAn / 7)} jours / an</Text>
               </View>
               <View style={s.gainBox}>
-                <Text style={s.gainValue}>{valorisation.toLocaleString('fr-FR')}€</Text>
+                <Text style={s.gainValue}>{formatNumber(valorisation)}EUR</Text>
                 <Text style={s.gainLabel}>valorisation annuelle</Text>
               </View>
             </View>
@@ -199,7 +215,7 @@ export default function AuditReportPDF({ audit, client, frictions, actions, pili
         )}
 
         <View style={s.footer}>
-          <Text style={s.footerText}>OptiPro — opti-pro.fr — p.laurent@opti-pro.fr</Text>
+          <Text style={s.footerText}>OptiPro - opti-pro.fr - p.laurent@opti-pro.fr</Text>
           <Text style={s.footerText}>Page 1/2</Text>
         </View>
       </Page>
@@ -209,7 +225,7 @@ export default function AuditReportPDF({ audit, client, frictions, actions, pili
         <View style={s.header}>
           <View>
             <Text style={s.logo}>OptiPro</Text>
-            <Text style={s.logoSub}>Rapport d&apos;audit — {clientName}</Text>
+            <Text style={s.logoSub}>Rapport d'audit - {clientName}</Text>
           </View>
           <View style={s.headerRight}>
             <Text style={s.headerValue}>{dateStr}</Text>
@@ -218,7 +234,7 @@ export default function AuditReportPDF({ audit, client, frictions, actions, pili
 
         {/* Points de friction */}
         <View style={s.section}>
-          <Text style={s.sectionTitle}>Points de friction identifiés ({frictions.length})</Text>
+          <Text style={s.sectionTitle}>Points de friction identifies ({frictions.length})</Text>
           {frictions.map((f: any, i: number) => (
             <View key={i} style={s.frictionRow}>
               <View style={[s.frictionDot, {
@@ -234,7 +250,7 @@ export default function AuditReportPDF({ audit, client, frictions, actions, pili
 
         {/* Plan d'action */}
         <View style={s.section}>
-          <Text style={s.sectionTitle}>Plan d&apos;action recommandé ({actions.length})</Text>
+          <Text style={s.sectionTitle}>Plan d'action recommande ({actions.length})</Text>
           {actions.map((a: any, i: number) => {
             const bgColor = a.priorite === 'P1' ? '#EF4444' : a.priorite === 'P2' ? '#F59E0B' : '#3B82F6'
             return (
@@ -243,11 +259,11 @@ export default function AuditReportPDF({ audit, client, frictions, actions, pili
                   <Text style={[s.actionPriority, { backgroundColor: bgColor }]}>{a.priorite}</Text>
                   <Text style={s.actionProblem}>{a.probleme}</Text>
                 </View>
-                <Text style={s.actionSolution}>→ {a.solution}</Text>
+                <Text style={s.actionSolution}>{"-> "}{a.solution}</Text>
                 <View style={s.actionMeta}>
-                  {a.gain_estime && <Text style={s.actionBadge}>📈 {a.gain_estime}</Text>}
-                  {a.delai && <Text style={s.actionBadge}>⏱️ {a.delai}</Text>}
-                  {a.budget_indicatif && <Text style={s.actionBadge}>💰 {a.budget_indicatif}</Text>}
+                  {a.gain_estime && <Text style={s.actionBadge}>Gain: {a.gain_estime}</Text>}
+                  {a.delai && <Text style={s.actionBadge}>Delai: {a.delai}</Text>}
+                  {a.budget_indicatif && <Text style={s.actionBadge}>Budget: {a.budget_indicatif}</Text>}
                 </View>
               </View>
             )
@@ -256,17 +272,14 @@ export default function AuditReportPDF({ audit, client, frictions, actions, pili
 
         {/* Prochaines étapes */}
         <View style={[s.section, { padding: 15, backgroundColor: '#EEF2FF', borderRadius: 8, borderWidth: 1, borderColor: '#C7D2FE' }]}>
-          <Text style={{ fontSize: 11, fontWeight: 700, color: '#312E81', marginBottom: 6 }}>Prochaines étapes</Text>
+          <Text style={{ fontSize: 11, fontWeight: 700, color: '#312E81', marginBottom: 6 }}>Prochaines etapes</Text>
           <Text style={{ fontSize: 9, color: '#4338CA', lineHeight: 1.6 }}>
-            1. Rendez-vous de restitution pour parcourir ce rapport ensemble{'\n'}
-            2. Choix des priorités et validation du périmètre{'\n'}
-            3. Devis sur mesure basé sur les actions retenues{'\n'}
-            4. Lancement du projet — un interlocuteur unique du début à la fin
+            {"1. Rendez-vous de restitution pour parcourir ce rapport ensemble\n2. Choix des priorites et validation du perimetre\n3. Devis sur mesure base sur les actions retenues\n4. Lancement du projet - un interlocuteur unique du debut a la fin"}
           </Text>
         </View>
 
         <View style={s.footer}>
-          <Text style={s.footerText}>OptiPro — opti-pro.fr — p.laurent@opti-pro.fr</Text>
+          <Text style={s.footerText}>OptiPro - opti-pro.fr - p.laurent@opti-pro.fr</Text>
           <Text style={s.footerText}>Page 2/2</Text>
         </View>
       </Page>
