@@ -106,3 +106,72 @@ export interface LigneForm {
   unite: DocumentUnite
   prix_unitaire_ht: number
 }
+
+// ── Audit System ─────────────────────────────────────────
+export type AuditStatut = 'en_cours' | 'termine' | 'rapport_genere' | 'presente'
+export type FrictionSeverite = 'critical' | 'warning' | 'info'
+export type ActionPriorite = 'P1' | 'P2' | 'P3'
+export type ActionComplexite = 'simple' | 'moyen' | 'complexe'
+export type BudgetIndicatif = '€' | '€€' | '€€€'
+export type ServiceOptiPro = 'creation' | 'automatisation' | 'les_deux'
+export type AuditPilier = 'outils' | 'process' | 'communication' | 'admin' | 'digital' | 'automatisation'
+
+export interface Audit {
+  id: string
+  created_at: string
+  updated_at: string
+  client_id: string | null
+  date_audit: string
+  secteur: string | null
+  effectif: string | null
+  ca_annuel: string | null
+  notes_generales: string | null
+  score_global: number
+  score_outils: number
+  score_process: number
+  score_communication: number
+  score_admin: number
+  score_digital: number
+  score_automatisation: number
+  statut: AuditStatut
+  heures_recuperables_semaine: number
+  devis_id: string | null
+  clients?: Client
+  audit_reponses?: AuditReponse[]
+  audit_frictions?: AuditFriction[]
+  audit_actions?: AuditAction[]
+}
+
+export interface AuditReponse {
+  id: string
+  audit_id: string
+  pilier: AuditPilier
+  question_id: string
+  score: number
+  commentaire: string | null
+}
+
+export interface AuditFriction {
+  id: string
+  audit_id: string
+  severite: FrictionSeverite
+  pilier: AuditPilier
+  description: string
+  impact_estime: string | null
+  question_id: string | null
+}
+
+export interface AuditAction {
+  id: string
+  audit_id: string
+  priorite: ActionPriorite
+  pilier: AuditPilier
+  probleme: string
+  solution: string
+  gain_estime: string | null
+  complexite: ActionComplexite | null
+  budget_indicatif: BudgetIndicatif | null
+  delai: string | null
+  service_optipro: ServiceOptiPro | null
+  ordre: number
+}

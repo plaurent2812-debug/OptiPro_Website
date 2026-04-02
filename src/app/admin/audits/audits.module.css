@@ -1,0 +1,538 @@
+/* ═══════════════════════════════════════════════════════════
+   Audit System Styles
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Wizard Progress ─────────────────────────────────────── */
+.wizardProgress {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.wizardStep {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  background: #F3F4F6;
+  color: #9CA3AF;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.wizardStep:hover {
+  background: #E5E7EB;
+}
+
+.wizardStepActive {
+  background: #EEF2FF;
+  color: #4F46E5;
+  border-color: #4F46E5;
+}
+
+.wizardStepDone {
+  background: #F0FDF4;
+  color: #059669;
+}
+
+.wizardStepIcon {
+  font-size: 1rem;
+}
+
+.wizardConnector {
+  width: 20px;
+  height: 2px;
+  background: #E5E7EB;
+  flex-shrink: 0;
+}
+
+.wizardConnectorDone {
+  background: #059669;
+}
+
+/* ── Question Card ───────────────────────────────────────── */
+.questionCard {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #E5E7EB;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.questionCard:hover {
+  border-color: #D1D5DB;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.questionTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1F2937;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.questionNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: #F3F4F6;
+  color: #6B7280;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── Score Options (Radio buttons) ───────────────────────── */
+.scoreOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.scoreOption {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #E5E7EB;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 0.85rem;
+  color: #374151;
+}
+
+.scoreOption:hover {
+  background: #F9FAFB;
+  border-color: #D1D5DB;
+}
+
+.scoreOptionSelected {
+  background: #EEF2FF;
+  border-color: #4F46E5;
+  color: #312E81;
+}
+
+.scoreOptionSelected .scoreDot {
+  background: #4F46E5;
+  border-color: #4F46E5;
+}
+
+.scoreDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #D1D5DB;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.scoreDot::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: white;
+}
+
+.scoreLabel {
+  flex: 1;
+}
+
+.scoreBadge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.scoreBadge1 { background: #FEE2E2; color: #991B1B; }
+.scoreBadge2 { background: #FEF3C7; color: #92400E; }
+.scoreBadge3 { background: #FEF9C3; color: #854D0E; }
+.scoreBadge4 { background: #DCFCE7; color: #166534; }
+.scoreBadge5 { background: #DBEAFE; color: #1E40AF; }
+
+/* ── Comment Toggle ──────────────────────────────────────── */
+.commentToggle {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: #6B7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.commentToggle:hover {
+  color: #4F46E5;
+}
+
+.commentInput {
+  margin-top: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  resize: vertical;
+  min-height: 60px;
+  font-family: inherit;
+}
+
+.commentInput:focus {
+  outline: none;
+  border-color: #4F46E5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* ── Wizard Navigation Buttons ───────────────────────────── */
+.wizardNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #E5E7EB;
+}
+
+.wizardNavBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #D1D5DB;
+  background: white;
+  color: #374151;
+  transition: all 0.15s ease;
+}
+
+.wizardNavBtn:hover {
+  background: #F3F4F6;
+}
+
+.wizardNavBtnPrimary {
+  background: #4F46E5;
+  border-color: #4F46E5;
+  color: white;
+}
+
+.wizardNavBtnPrimary:hover {
+  background: #4338CA;
+}
+
+.wizardNavBtnFinalize {
+  background: linear-gradient(135deg, #059669, #10B981);
+  border-color: #059669;
+  color: white;
+}
+
+.wizardNavBtnFinalize:hover {
+  background: linear-gradient(135deg, #047857, #059669);
+}
+
+/* ── Save Indicator ──────────────────────────────────────── */
+.saveIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: #059669;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.saveIndicatorVisible {
+  opacity: 1;
+}
+
+/* ── Radar Chart ─────────────────────────────────────────── */
+.radarContainer {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* ── Results Page ────────────────────────────────────────── */
+.resultsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .resultsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.resultCard {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #E5E7EB;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.resultCardFull {
+  grid-column: 1 / -1;
+}
+
+.resultCardTitle {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+/* ── Score Animation ─────────────────────────────────────── */
+.scoreCircle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  position: relative;
+}
+
+.scoreValue {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.scoreMax {
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0.7;
+  margin-top: 0.15rem;
+}
+
+.scoreLevel {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* ── Friction List ───────────────────────────────────────── */
+.frictionItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.frictionItem:last-child {
+  border-bottom: none;
+}
+
+.frictionDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 0.35rem;
+  flex-shrink: 0;
+}
+
+.frictionText {
+  flex: 1;
+}
+
+.frictionDesc {
+  font-size: 0.9rem;
+  color: #1F2937;
+  font-weight: 500;
+}
+
+.frictionImpact {
+  font-size: 0.8rem;
+  color: #6B7280;
+  margin-top: 0.15rem;
+}
+
+/* ── Action Plan ─────────────────────────────────────────── */
+.actionItem {
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #E5E7EB;
+  margin-bottom: 0.75rem;
+  transition: border-color 0.2s;
+}
+
+.actionItem:hover {
+  border-color: #D1D5DB;
+}
+
+.actionHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.actionPriority {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+}
+
+.actionPriorityP1 { background: #FEE2E2; color: #991B1B; }
+.actionPriorityP2 { background: #FEF3C7; color: #92400E; }
+.actionPriorityP3 { background: #DBEAFE; color: #1E40AF; }
+
+.actionProblem {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1F2937;
+}
+
+.actionSolution {
+  font-size: 0.85rem;
+  color: #4B5563;
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  border-left: 2px solid #E5E7EB;
+}
+
+.actionMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.actionBadge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: #F3F4F6;
+  color: #6B7280;
+}
+
+/* ── Pilier Score Bars ───────────────────────────────────── */
+.pilierBar {
+  margin-bottom: 1rem;
+}
+
+.pilierBarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+}
+
+.pilierBarLabel {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.pilierBarScore {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.pilierBarTrack {
+  height: 8px;
+  background: #F3F4F6;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.pilierBarFill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Gains Summary ───────────────────────────────────────── */
+.gainsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .gainsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gainCard {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 10px;
+  background: #F9FAFB;
+}
+
+.gainValue {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #059669;
+}
+
+.gainLabel {
+  font-size: 0.75rem;
+  color: #6B7280;
+  margin-top: 0.25rem;
+}
+
+/* ── Status badges for audit ─────────────────────────────── */
+:global(.badge--en_cours) {
+  background: #EEF2FF !important;
+  color: #4F46E5 !important;
+}
+
+:global(.badge--termine) {
+  background: #F0FDF4 !important;
+  color: #059669 !important;
+}
+
+:global(.badge--rapport_genere) {
+  background: #FEF3C7 !important;
+  color: #92400E !important;
+}
+
+:global(.badge--presente) {
+  background: #DBEAFE !important;
+  color: #1E40AF !important;
+}

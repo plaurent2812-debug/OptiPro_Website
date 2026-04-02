@@ -9,6 +9,7 @@ import styles from './AdminSidebar.module.css'
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/admin', icon: '📊' },
   { label: 'Clients', href: '/admin/clients', icon: '👥' },
+  { label: 'Audits', href: '/admin/audits', icon: '🔍' },
   { label: 'Devis', href: '/admin/devis', icon: '📄' },
   { label: 'Abonnements', href: '/admin/abonnements', icon: '🔁' },
   { label: 'Factures', href: '/admin/factures', icon: '💶' },

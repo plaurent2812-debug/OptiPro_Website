@@ -181,6 +181,26 @@
   color: #6B7280;
 }
 
+.badge--en_cours {
+  background-color: #EEF2FF;
+  color: #4F46E5;
+}
+
+.badge--termine {
+  background-color: #D1FAE5;
+  color: #059669;
+}
+
+.badge--rapport_genere {
+  background-color: #FEF3C7;
+  color: #92400E;
+}
+
+.badge--presente {
+  background-color: #DBEAFE;
+  color: #1E40AF;
+}
+
 .actionsBox {
   text-align: right;
 }

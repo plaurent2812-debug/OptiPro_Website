@@ -87,3 +87,16 @@ export const UNITE_LABELS: Record<string, string> = {
   jour: 'Jour',
   mois: 'Mois',
 }
+
+export const AUDIT_STATUT_LABELS: Record<string, string> = {
+  en_cours: 'En cours',
+  termine: 'Terminé',
+  rapport_genere: 'Rapport généré',
+  presente: 'Présenté',
+}
+
+export function generateAuditNumero(existingCount: number): string {
+  const year = new Date().getFullYear()
+  const seq = String(existingCount + 1).padStart(3, '0')
+  return `AUD-${year}-${seq}`
+}
