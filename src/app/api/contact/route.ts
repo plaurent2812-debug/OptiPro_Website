@@ -1,6 +1,20 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
+const cibleLabels: Record<string, string> = {
+    artisans: '🔧 Artisan / Indépendant',
+    tpe: '🏢 TPE / PME',
+    projets: '🚀 Projet sur mesure',
+    abonnement: '🔄 Abonnement Suivi & Évolution',
+    default: 'Demande générale',
+};
+
+function subjectFor(cible: string | undefined, name: string): string {
+    const emoji = cibleLabels[cible ?? 'default']?.split(' ')[0] ?? '✉️';
+    const label = cibleLabels[cible ?? 'default'] ?? 'Demande';
+    return `${emoji} ${label} — ${name}`;
+}
+
 export async function POST(request: Request) {
     const apiKey = process.env.RESEND_API_KEY;
     const isConfigured = apiKey && apiKey !== 're_...' && apiKey.length > 5;
@@ -12,23 +26,24 @@ export async function POST(request: Request) {
             console.log("Nouveau contact reçu silencieusement :", body);
             return NextResponse.json({ success: true, simulated: true });
         }
-        
+
         console.error("RESEND_API_KEY is not defined or is just a placeholder.");
         return NextResponse.json({ error: "Configuration serveur manquante (Resend API)" }, { status: 500 });
     }
-    
+
     const resend = new Resend(apiKey);
     try {
         const body = await request.json();
-        const { name, company, email, phone, activity, message } = body;
+        const { name, company, email, phone, activity, message, cible, budget, urgence } = body;
 
-        // Validation basique
         if (!name || !email) {
             return NextResponse.json(
                 { error: 'Le nom et l\'email sont requis' },
                 { status: 400 }
             );
         }
+
+        const cibleLabel = cibleLabels[cible ?? 'default'] ?? 'Demande générale';
 
         // --- Enregistrement automatique dans le CRM (Table clients) ---
         const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -37,9 +52,17 @@ export async function POST(request: Request) {
         if (supabaseUrl && supabaseServiceKey) {
             import('@supabase/supabase-js').then(({ createClient }) => {
                 const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
-                
-                const notes = `Secteur d'activité : ${activity || 'Non renseigné'}\nMessage/Problème :\n${message || 'Aucun message.'}`;
-                // Extraction basique du prénom/nom
+
+                const notes = [
+                    `Cible : ${cibleLabel}`,
+                    `Secteur : ${activity || 'Non renseigné'}`,
+                    `Budget : ${budget || 'Non précisé'}`,
+                    `Urgence : ${urgence || 'Non précisée'}`,
+                    '',
+                    'Message :',
+                    message || 'Aucun message.',
+                ].join('\n');
+
                 const nameParts = name.trim().split(' ');
                 const prenom = nameParts.length > 1 ? nameParts[0] : '';
                 const nomFamille = nameParts.length > 1 ? nameParts.slice(1).join(' ') : name;
@@ -60,25 +83,33 @@ export async function POST(request: Request) {
         } else {
             console.warn("⚠️ PROSPECT NON SAUVEGARDÉ EN BASE : Il manque la SUPABASE_SERVICE_ROLE_KEY dans les variables d'environnement.");
         }
-        // -------------------------------------------------------------
 
         const { data, error } = await resend.emails.send({
-            from: 'Contact OptiPro <p.laurent@opti-pro.fr>', // Envoi depuis le nom de domaine vérifié
-            to: ['p.laurent@opti-pro.fr'], // Adresse de réception principale
+            from: 'Contact OptiPro <p.laurent@opti-pro.fr>',
+            to: ['p.laurent@opti-pro.fr'],
             replyTo: email,
-            subject: `Nouveau contact OptiPro — ${name}`,
+            subject: subjectFor(cible, name),
             html: `
-                <div style="font-family: sans-serif; max-width: 600px; padding: 20px;">
-                    <h2>Nouveau contact OptiPro</h2>
+                <div style="font-family: sans-serif; max-width: 600px; padding: 20px; color: #0f172a;">
+                    <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 10px 14px; border-radius: 6px; margin-bottom: 20px;">
+                        <strong style="color: #9a3412;">${cibleLabel}</strong>
+                    </div>
+                    <h2 style="margin: 0 0 16px;">Nouveau contact OptiPro</h2>
                     <p><strong>Nom :</strong> ${name}</p>
-                    <p><strong>Entreprise :</strong> ${company || 'Non renseigné'}</p>
+                    <p><strong>Entreprise :</strong> ${company || '<em>Non renseigné</em>'}</p>
                     <p><strong>Email :</strong> <a href="mailto:${email}">${email}</a></p>
-                    <p><strong>Téléphone :</strong> ${phone || 'Non renseigné'}</p>
-                    <hr style="margin: 20px 0; border: none; border-top: 1px solid #eaeaea;" />
-                    <p><strong>Secteur d'activité :</strong> ${activity || 'Non renseigné'}</p>
-                    <hr style="margin: 20px 0; border: none; border-top: 1px solid #eaeaea;" />
-                    <p><strong>Message / Problème principal :</strong></p>
-                    <p style="white-space: pre-wrap; background: #f9f9f9; padding: 15px; border-radius: 5px;">${message || 'Aucun message.'}</p>
+                    <p><strong>Téléphone :</strong> ${phone || '<em>Non renseigné</em>'}</p>
+                    <p><strong>Secteur d&apos;activité :</strong> ${activity || '<em>Non renseigné</em>'}</p>
+
+                    <hr style="margin: 20px 0; border: none; border-top: 1px solid #e2e8f0;" />
+
+                    <p><strong>Budget envisagé :</strong> ${budget || '<em>Non précisé</em>'}</p>
+                    <p><strong>Urgence :</strong> ${urgence || '<em>Non précisée</em>'}</p>
+
+                    <hr style="margin: 20px 0; border: none; border-top: 1px solid #e2e8f0;" />
+
+                    <p><strong>Message / Projet :</strong></p>
+                    <div style="white-space: pre-wrap; background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0;">${message || '<em>Aucun message.</em>'}</div>
                 </div>
             `,
         });

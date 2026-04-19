@@ -2,63 +2,48 @@ import type { Metadata } from 'next';
 import ServiceStep from '@/components/ui/ServiceStep';
 import AuditCta from '@/components/ui/AuditCta';
 import { services } from '@/data/services';
+import { offerCategories } from '@/data/offers';
+import OffersSection from './OffersSection';
 
 export const metadata: Metadata = {
-  title: 'Audit & développement sur mesure — Services',
+  title: 'Services & tarifs — OptiPro',
   description:
-    'Audit gratuit, analyse, création de sites web et applications sur mesure, automatisation — la démarche OptiPro en 4 étapes pour artisans et TPE.',
+    'Nos offres claires pour artisans, TPE et projets structurants : sites sur mesure, automatisations, IA et accompagnement. Prix affichés pour les petites prestations, sur devis pour les projets complexes.',
   alternates: {
     canonical: '/services',
   },
   openGraph: {
-    title: 'Services OptiPro — Audit, création et automatisation sur mesure',
+    title: 'Services & tarifs OptiPro — Artisans, TPE, projets sur mesure',
     description:
-      'Découvrez notre approche complète en 4 étapes pour transformer vos outils et process.',
+      'Des formules claires selon votre taille et votre besoin. Prix affichés, audit approfondi pour les projets complexes.',
   },
 };
 
-const servicesJsonLd = {
+const offerCatalogJsonLd = {
   '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Service',
-      name: "Audit de l'existant",
-      description:
-        "Analyse complète de vos outils, process quotidiens et points de friction. Rapport détaillé avec recommandations priorisées.",
-      provider: { '@id': 'https://www.opti-pro.fr/#organization' },
+  '@type': 'OfferCatalog',
+  name: 'Catalogue des services OptiPro',
+  itemListElement: offerCategories.flatMap((cat) =>
+    cat.offers.map((offer) => ({
+      '@type': 'Offer',
+      name: offer.name,
+      description: offer.description,
+      category: cat.title,
       areaServed: 'FR',
-      offers: {
-        '@type': 'Offer',
-        price: '0',
-        priceCurrency: 'EUR',
-        description: 'Audit gratuit et sans engagement',
-      },
-    },
-    {
-      '@type': 'Service',
-      name: 'Analyse des blocages',
-      description:
-        "Identification des tâches chronophages, priorisation des blocages et plan d'action concret adapté à votre budget.",
-      provider: { '@id': 'https://www.opti-pro.fr/#organization' },
-      areaServed: 'FR',
-    },
-    {
-      '@type': 'Service',
-      name: 'Création sur mesure',
-      description:
-        'Conception et développement de sites web, applications web, tableaux de bord et espaces clients adaptés à votre métier.',
-      provider: { '@id': 'https://www.opti-pro.fr/#organization' },
-      areaServed: 'FR',
-    },
-    {
-      '@type': 'Service',
-      name: 'Automatisation',
-      description:
-        "Connexion de vos outils entre eux et automatisation des tâches répétitives : devis, relances, synchronisations, exports.",
-      provider: { '@id': 'https://www.opti-pro.fr/#organization' },
-      areaServed: 'FR',
-    },
-  ],
+      seller: { '@id': 'https://www.opti-pro.fr/#organization' },
+    })),
+  ),
+};
+
+const demarcheJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': services.map((s) => ({
+    '@type': 'Service',
+    name: s.title,
+    description: s.longDescription,
+    provider: { '@id': 'https://www.opti-pro.fr/#organization' },
+    areaServed: 'FR',
+  })),
 };
 
 const faqJsonLd = {
@@ -67,18 +52,18 @@ const faqJsonLd = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: "Combien coûte l'audit ?",
+      name: 'Les prix sont-ils affichés ?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: "L'audit est 100% gratuit et sans engagement. Il permet d'identifier vos points de friction et de définir un plan d'action concret.",
+        text: "Oui pour les petites prestations catalogue (Pack Visibilité, Sheets automatisés, Bots Telegram, formations). Pour les projets complexes, un audit approfondi est facturé avant tout devis — il est déduit du devis final si la mission est signée.",
       },
     },
     {
       '@type': 'Question',
-      name: 'Combien de temps dure un projet de création ?',
+      name: 'Pourquoi facturer un audit avant un gros projet ?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: "La durée dépend de la complexité du projet. Un site vitrine prend généralement 2 à 4 semaines, une application web sur mesure de 1 à 3 mois. Chaque projet est cadré dès l'analyse.",
+        text: "Parce qu'un devis fiable demande un vrai travail d'analyse. L'audit approfondi (490€ HT) garantit que le devis final est précis, et qu'OptiPro peut tenir ses engagements de délai et de qualité. Cet audit est intégralement déduit si la mission est signée.",
       },
     },
     {
@@ -94,7 +79,7 @@ const faqJsonLd = {
       name: 'Quels types de clients accompagnez-vous ?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: "OptiPro accompagne principalement les artisans, TPE et indépendants qui perdent du temps sur des tâches administratives ou qui ont besoin d'outils numériques adaptés à leur métier.",
+        text: "OptiPro accompagne artisans indépendants, TPE structurées et porteurs de projets de transformation digitale. Chaque cible a ses propres formules, avec des niveaux de complexité et de tarification adaptés.",
       },
     },
     {
@@ -102,7 +87,7 @@ const faqJsonLd = {
       name: 'Est-ce que je garde la main sur mes outils après le projet ?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: "Oui, absolument. Chaque projet inclut une formation et un accompagnement. Vous êtes autonome sur vos outils. Pierre reste disponible pour le support et l'évolution.",
+        text: "Oui. Chaque projet inclut une formation et une documentation. Vous êtes autonome sur vos outils. Pour ceux qui veulent un suivi continu, l'abonnement Suivi & Évolution à 180€/mois HT couvre maintenance et 1h d'évolution mensuelle.",
       },
     },
   ],
@@ -111,7 +96,8 @@ const faqJsonLd = {
 export default function ServicesPage() {
   return (
     <main style={{ paddingTop: '6rem' }}>
-      <script type="application/ld+json">{JSON.stringify(servicesJsonLd)}</script>
+      <script type="application/ld+json">{JSON.stringify(offerCatalogJsonLd)}</script>
+      <script type="application/ld+json">{JSON.stringify(demarcheJsonLd)}</script>
       <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
       <script type="application/ld+json">{JSON.stringify({
         '@context': 'https://schema.org',
@@ -121,19 +107,37 @@ export default function ServicesPage() {
           { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.opti-pro.fr/services' },
         ],
       })}</script>
+
       {/* Hero */}
       <section style={{ padding: '3rem 0 4rem', textAlign: 'center' }}>
-        <div className="container" style={{ maxWidth: '700px' }}>
-          <h1
+        <div className="container" style={{ maxWidth: '760px' }}>
+          <div
             style={{
-              fontSize: '2.5rem',
-              fontWeight: 800,
-              color: 'var(--primary)',
-              marginBottom: '1rem',
-              letterSpacing: '-0.03em',
+              display: 'inline-block',
+              padding: '0.4rem 1rem',
+              background: 'var(--accent-light)',
+              color: 'var(--accent)',
+              borderRadius: '999px',
+              fontSize: '0.85rem',
+              fontWeight: 600,
+              letterSpacing: '0.02em',
+              marginBottom: '1.5rem',
+              textTransform: 'uppercase',
             }}
           >
-            Une démarche complète, adaptée à votre métier
+            Services &amp; tarifs
+          </div>
+          <h1
+            style={{
+              fontSize: '2.75rem',
+              fontWeight: 800,
+              color: 'var(--primary)',
+              marginBottom: '1.25rem',
+              letterSpacing: '-0.03em',
+              lineHeight: 1.1,
+            }}
+          >
+            Des solutions adaptées à votre réalité, pas aux nôtres
           </h1>
           <p
             style={{
@@ -142,15 +146,42 @@ export default function ServicesPage() {
               lineHeight: 1.7,
             }}
           >
-            Pas de solution toute faite. On part de votre réalité, on identifie
-            ce qui bloque, et on construit ce qu&apos;il vous faut.
+            Artisan solo, TPE structurée ou projet de transformation complète —
+            chaque situation appelle une réponse différente. Voici comment
+            j&apos;accompagne chacune.
           </p>
         </div>
       </section>
 
-      {/* Timeline détaillée */}
-      <section style={{ padding: '2rem 0 4rem' }}>
+      {/* Offres */}
+      <OffersSection />
+
+      {/* Démarche */}
+      <section style={{ padding: '5rem 0 3rem' }}>
         <div className="container">
+          <div style={{ maxWidth: '720px', margin: '0 auto 3rem', textAlign: 'center' }}>
+            <h2
+              style={{
+                fontSize: '2.25rem',
+                fontWeight: 800,
+                color: 'var(--primary)',
+                letterSpacing: '-0.03em',
+                marginBottom: '1rem',
+                lineHeight: 1.15,
+              }}
+            >
+              Notre démarche
+            </h2>
+            <p
+              style={{
+                fontSize: '1.1rem',
+                color: 'var(--secondary)',
+                lineHeight: 1.6,
+              }}
+            >
+              Une méthode éprouvée en 4 étapes, adaptée à chaque projet.
+            </p>
+          </div>
           <div className="timeline">
             {services.map((s) => (
               <ServiceStep key={s.id} step={s} detailed />
@@ -160,20 +191,20 @@ export default function ServicesPage() {
       </section>
 
       {/* Qui est Pierre */}
-      <section style={{ padding: '3rem 0', background: 'var(--background)' }}>
+      <section style={{ padding: '3rem 0 4rem', background: 'var(--background)' }}>
         <div className="container" style={{ maxWidth: '800px' }}>
           <div className="pierre-section">
             <div className="pierre-avatar">👨‍💻</div>
             <div className="pierre-content">
               <h3>Pierre Laurent</h3>
               <p style={{ marginBottom: '0.75rem' }}>
-                Fondateur d&apos;OptiPro, j&apos;accompagne artisans, TPE et
-                indépendants dans leur transformation numérique. Mon approche :
-                comprendre votre métier avant de proposer des solutions.
+                Fondateur d&apos;OptiPro. 10 ans à optimiser des process dans des
+                entreprises avant de mettre cette expérience au service des
+                artisans, TPE et indépendants.
               </p>
               <p>
-                Un interlocuteur unique du début à la fin. Pas de commercial,
-                pas de sous-traitance — c&apos;est moi qui analyse, conçoit et
+                Un interlocuteur unique du début à la fin. Pas de commercial, pas
+                de sous-traitance — c&apos;est moi qui analyse, conçoit et
                 développe vos outils.
               </p>
             </div>
@@ -181,7 +212,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* CTA Audit */}
+      {/* CTA */}
       <section style={{ padding: '2rem 0 5rem' }}>
         <div className="container">
           <AuditCta />
