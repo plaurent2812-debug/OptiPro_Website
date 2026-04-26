@@ -81,6 +81,71 @@ CONTRAINTES
 
 ---
 
+## 🎯 Quel mode choisir ? Prompt maître vs Étape par étape
+
+Les deux modes existent. Ils ne donnent **pas le même résultat**. Lis ce tableau avant de choisir.
+
+### Comparatif détaillé
+
+| Critère | Prompt maître | Étape par étape |
+|---|---|---|
+| **Vitesse** | ✅ 1 lancement, ~1h | ❌ 8 lancements, ~2h |
+| **Qualité du `llms.txt`** | ⚠️ Interview rapide, FAQ parfois superficielles | ✅ Questions ciblées, réponses creusées |
+| **Adaptation aux cas particuliers** | ⚠️ Suit le playbook même quand il y a une exception | ✅ Possibilité de dévier à chaque étape |
+| **Détection des pièges** (`sitemap.ts` qui écrase, etc.) | ⚠️ Dépend de la qualité de la phase audit | ✅ Vérification entre chaque étape |
+| **Erreurs silencieuses** | ⚠️ Peut continuer sans signaler clairement | ✅ Tu valides chaque étape |
+| **Contrôle utilisateur** | ❌ Peu de points d'arrêt | ✅ Validation systématique |
+| **Charge mentale** | ✅ Tu suis, c'est tout | ❌ Tu dois orchestrer |
+| **Apprentissage** | ❌ Tu reproduis sans comprendre | ✅ Tu apprends le pourquoi |
+
+### Ce qui se dégrade vraiment en mode maître
+
+1. **Le `llms.txt`** est la pièce la plus impactée. En mode étape par étape, l'interview se déroule sur 5 messages séparés, ce qui force à creuser. En mode maître, l'interview est plus expéditive — risque de réponses superficielles.
+
+2. **Les pièges framework-spécifiques** (ex : Next.js App Router avec `sitemap.ts`/`robots.ts` qui écrasent les fichiers statiques `public/`). En mode étape par étape, le bug se voit en prod et se corrige immédiatement. En mode maître, ça doit être anticipé dans la phase audit, et c'est moins garanti.
+
+3. **Les ajustements à chaud** (DNS chez IONOS au lieu d'OVH, configuration Vercel particulière, headers CSP qui bloquent un truc). En mode étape par étape, on s'adapte en 2 messages. En mode maître, soit l'audit l'a détecté, soit c'est zappé.
+
+4. **Les différenciateurs business subtils** — ce qui rend ton offre unique vs concurrents. Une interview rapide capte les évidences, pas les nuances qui font la différence dans une recommandation IA.
+
+### Tableau de décision
+
+| Situation | Mode recommandé | Pourquoi |
+|---|---|---|
+| Site simple (5-10 pages, business clair, secteur standard) | **Maître** | Le gain de temps compense la perte de finesse |
+| Site complexe ou positionnement nuancé | **Étape par étape** | Qualité du `llms.txt` >> rapidité |
+| Tu refais ça pour la 3e fois et tu maîtrises le flux | **Maître** | Tu sais déjà ce qu'il faut, tu peux corriger à la volée |
+| Première fois sur un type de site nouveau (e-commerce, SaaS, etc.) | **Étape par étape** | Tu apprends les pièges en même temps |
+| Site avec stack non-standard (custom backend, headless CMS) | **Étape par étape** | Trop de variables, le maître va probablement se planter |
+| Tu veux un audit rapide sans forcément tout déployer | **Maître** (s'arrêter après Phase 1) | L'audit est très bien fait dans le maître |
+| Tu refais après une grosse refonte du site existant | **Maître** | L'audit détecte les fichiers obsolètes à mettre à jour |
+
+### Hybride — la stratégie recommandée
+
+La meilleure approche pour la plupart des sites :
+
+1. **Lance le prompt maître** pour la **Phase 1 (audit)** uniquement
+2. **Lis le rapport** d'audit attentivement
+3. **Décide** :
+   - Si tout est simple → continue en mode maître
+   - Si tu vois des points sensibles (positionnement, framework custom) → bascule sur les prompts étape par étape pour ces étapes-là
+4. **Reviens en maître** pour les étapes mécaniques (sitemap, robots, IndexNow)
+
+Cette approche te donne **70% du gain de temps du maître** + **90% de la qualité de l'étape par étape**.
+
+### Comment basculer du maître vers l'étape par étape
+
+Si tu es en mode maître et tu sens que la qualité va se dégrader sur une étape (typiquement le `llms.txt`), interromps simplement Claude :
+
+```
+Stop. Pour le llms.txt, je veux qu'on fasse l'interview en mode
+détaillé : pose-moi les questions UNE par UNE, attends ma réponse
+complète, et creuse si tu sens que ma réponse est superficielle.
+On reprendra le mode rapide pour la suite.
+```
+
+---
+
 ## Sommaire
 
 1. [Pourquoi c'est important](#1-pourquoi-cest-important)
