@@ -11,9 +11,25 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'OptiPro — Conseil & développement sur mesure',
     description:
-      'Audit gratuit, création de sites et web apps sur mesure, automatisation pour artisans, TPE et indépendants.',
+      'Je libère le temps des Artisans et TPE en optimisant et automatisant leurs processus.',
+    url: 'https://www.opti-pro.fr',
     type: 'website',
     locale: 'fr_FR',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 627,
+        alt: 'OptiPro — Conseil & développement sur mesure',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'OptiPro — Conseil & développement sur mesure',
+    description:
+      'Je libère le temps des Artisans et TPE en optimisant et automatisant leurs processus.',
+    images: ['/og-image.jpg'],
   },
 };
 
